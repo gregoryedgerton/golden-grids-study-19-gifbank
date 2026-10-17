@@ -16,9 +16,12 @@ export const PAGES = {
 export const accountHref = (id: string) => `${PAGES.account}?a=${id}`;
 export const statementHref = (id: string, month?: string) => `${PAGES.statements}?a=${id}${month ? `&m=${month}` : ""}`;
 
-/** The demo sign-in, filled in for the reader and not editable. */
-export const DEMO_USER = "gifbank_demo";
-export const DEMO_PASSWORD_SHOWN = "••••••••••";
+/*
+ * The demo sign-in constants (DEMO_USER / DEMO_PASSWORD_SHOWN) were removed in the
+ * 2026-10 Safe Browsing remediation, along with the sign-in form that showed them.
+ * The demo is now entered through a parody notice, not a credential form. Do not
+ * reintroduce them. See CLAUDE.md > "Safe Browsing remediation".
+ */
 
 export const CUSTOMER = {
   first: "Jordan",
@@ -88,7 +91,6 @@ export const LEGAL = ["Privacy", "Online Advertising", "Terms of Use", "Security
 
 export const REFERENCE = {
   home: { label: "TD Bank's personal banking home page", url: "https://www.td.com/us/en/personal-banking" },
-  login: { label: "its Online Banking sign-in", url: "https://onlinebanking.tdbank.com/" },
   onlineBanking: { label: "its description of Online Banking", url: "https://www.td.com/us/en/personal-banking/online-banking" },
   myTd: { label: "My TD", url: "https://www.td.com/us/en/personal-banking/my-td" },
   statements: { label: "its page on online statements", url: "https://www.tdbank.com/getmore/OnlineStatements.html" },

@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { PublicPage } from "../lib/Page";
+import { PublicPage, openEnter } from "../lib/Page";
 import { GridBand, deal, type Cell } from "../bands/bands";
 import { PhotoCard } from "../lib/cards";
 import { Fit } from "../lib/fit";
@@ -13,10 +13,9 @@ import "../styles.css";
  * The public home page, after the reference's: a hero of a photograph, a
  * green panel with the offer and the Online Banking box beside it; the row
  * of products; how to manage an account; three photographs with reasons to
- * bank; and the questions people ask. The log-in is in the header's corner,
- * and the Online Banking box opens it.
+ * bank; and the questions people ask. Entry is in the header's corner, and
+ * the Online Banking box opens the same parody notice before the demo.
  */
-const openLogin = () => { window.dispatchEvent(new Event("gifbank:login")); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
 function OnlineBanking() {
   const s = session.use();
@@ -24,7 +23,7 @@ function OnlineBanking() {
     <div className="box box--card ob">
       <p className="ob__title">Online Banking</p>
       <div className="ob__acts">
-        {s.in ? <a className="btn btn--green" href={PAGES.accounts}>Go to your accounts</a> : <button type="button" className="btn btn--green" onClick={openLogin}><Icon name="lock" size={18} />Login</button>}
+        {s.in ? <a className="btn btn--green" href={PAGES.accounts}>Go to your accounts</a> : <button type="button" className="btn btn--green" onClick={openEnter}><Icon name="lock" size={18} />Enter the demo</button>}
         <span className="linkish">Sign-Up <Icon name="right" size={14} /></span>
       </div>
       <ul className="ob__links">
@@ -105,7 +104,7 @@ function Questions() {
 
 function App() {
   return (
-    <PublicPage source={[REFERENCE.home, REFERENCE.login]}>
+    <PublicPage source={[REFERENCE.home, REFERENCE.onlineBanking]}>
       <h1 className="visually-hidden">GIFbank personal banking</h1>
       <Hero />
       <Find />

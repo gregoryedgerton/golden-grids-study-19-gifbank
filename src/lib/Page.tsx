@@ -1,10 +1,10 @@
-import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Tools } from "./tools";
 import { StudyBanner, StudyDisclosure } from "./study";
 import { Credits } from "./modules";
 import { useFontsReady } from "./fonts";
 import { Icon, Mark } from "../icons";
-import { BANK_TABS, CUSTOMER, DEMO_PASSWORD_SHOWN, DEMO_USER, FOOTER, LEGAL, PAGES, PRODUCT_NAV, SEGMENTS } from "../content";
+import { BANK_TABS, CUSTOMER, FOOTER, LEGAL, PAGES, PRODUCT_NAV, SEGMENTS } from "../content";
 import { logIn, logOut, session } from "./store";
 
 /**
@@ -18,62 +18,84 @@ import { logIn, logOut, session } from "./store";
  */
 
 /**
- * The demo sign-in. The fields are filled for the reader and cannot be
- * changed: there is one customer and one way in, nothing is typed, and
- * nothing leaves the browser. The password is shown as dots in an ordinary
- * text field, so no browser offers to save it.
+ * CASE-STUDY REMEDIATION (2026-10) — agent note.
+ *
+ * Google Safe Browsing flagged this study as a "deceptive site". The cause was
+ * the demo Online Banking sign-in: a bank-styled page carrying "User name" and
+ * "Password" fields and a "Log In" button matches a phishing pattern whatever
+ * disclaimers surround it, and the public home page also linked out to the
+ * reference bank's real sign-in portal. Nothing was ever collected here — the
+ * fields were read-only and inert — but the *appearance* of a credential form
+ * is what the heuristic reads, so it has been removed.
+ *
+ * In its place, an "Enter" control opens a notice that GIFbank is a parody for
+ * the Golden Grids layout study and not a real bank, and only then continues
+ * into the demo accounts (where the old Log In button went). The real-bank
+ * sign-in link was dropped from the home page's sources (see content.ts).
+ *
+ * Do NOT reintroduce username/password inputs, a sign-in form, or a link to any
+ * real bank's sign-in anywhere in this study. See CLAUDE.md › "Safe Browsing
+ * remediation".
  */
-export function LoginForm({ title = "Log in to Online Banking", headingLevel = 2, autoFocus }: { title?: string; headingLevel?: 2 | 3; autoFocus?: boolean }) {
-  const id = useId();
-  const [busy, setBusy] = useState(false);
-  const [remember, setRemember] = useState(session.get().remember);
-  const btn = useRef<HTMLButtonElement>(null);
-  useEffect(() => { if (autoFocus) btn.current?.focus(); }, [autoFocus]);
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-    setBusy(true);
-    setTimeout(() => { logIn(remember); location.assign(PAGES.accounts); }, 650);
-  };
-  const H = headingLevel === 2 ? "h2" : "h3";
+
+/** Opens the parody notice — the only way into the demo session. */
+export const openEnter = () => window.dispatchEvent(new Event("gifbank:enter"));
+
+/** Replaces the old sign-in button: a plain control that opens the notice. */
+export function EnterButton({ block, autoFocus }: { block?: boolean; autoFocus?: boolean }) {
+  const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => { if (autoFocus) ref.current?.focus(); }, [autoFocus]);
   return (
-    <form className="login" onSubmit={submit} aria-labelledby={`${id}t`} autoComplete="off">
-      <H className="login__title" id={`${id}t`}>{title}</H>
-      <label className="login__label" htmlFor={`${id}u`}>User name</label>
-      <input className="login__field" id={`${id}u`} type="text" value={DEMO_USER} readOnly aria-describedby={`${id}n`} />
-      <label className="login__label" htmlFor={`${id}p`}>Password</label>
-      <input className="login__field" id={`${id}p`} type="text" value={DEMO_PASSWORD_SHOWN} readOnly aria-describedby={`${id}n`} />
-      <p className="login__note" id={`${id}n`}><Icon name="info" size={16} />Demo sign-in: these fields are filled for you and can't be changed. Never type real bank details into a page you reached from a link.</p>
-      <label className="login__remember"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />Remember me</label>
-      <button ref={btn} type="submit" className="btn btn--green btn--block" disabled={busy}><Icon name="lock" size={18} />{busy ? "Logging in…" : "Log In"}</button>
-      <ul className="login__links">
-        <li><span>Forgot user name or password?</span></li>
-        <li><span>Sign up for Online Banking</span></li>
-      </ul>
-      <p role="status" className="visually-hidden">{busy ? "Logging in to the demo accounts." : ""}</p>
-    </form>
+    <button ref={ref} type="button" className={`btn btn--green${block ? " btn--block" : ""}`} onClick={openEnter}>
+      <Icon name="lock" size={18} />Enter the demo
+    </button>
   );
 }
 
-function CornerLogin() {
+/**
+ * The parody notice, shown when the reader chooses Enter. It says plainly that
+ * GIFbank is not a real bank and that there is no real sign-in, then continues
+ * into the demo accounts — the destination the removed Log In button had.
+ */
+function ParodyModal() {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const btn = useRef<HTMLButtonElement>(null);
+  const go = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     const show = () => setOpen(true);
-    window.addEventListener("gifbank:login", show);
-    return () => window.removeEventListener("gifbank:login", show);
+    window.addEventListener("gifbank:enter", show);
+    return () => window.removeEventListener("gifbank:enter", show);
   }, []);
   useEffect(() => {
     if (!open) return;
-    const key = (e: KeyboardEvent) => { if (e.key === "Escape") { setOpen(false); btn.current?.focus(); } };
-    const click = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
-    window.addEventListener("keydown", key); window.addEventListener("mousedown", click);
-    return () => { window.removeEventListener("keydown", key); window.removeEventListener("mousedown", click); };
+    go.current?.focus();
+    const key = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
   }, [open]);
+  if (!open) return null;
+  const enter = () => { logIn(false); location.assign(PAGES.accounts); };
   return (
-    <div className={`corner${open ? " is-open" : ""}`} ref={ref}>
-      <button ref={btn} type="button" className="corner__btn" aria-expanded={open} aria-controls="corner-login" onClick={() => setOpen(!open)}>Log In <Icon name="chevron" size={16} /></button>
-      {open && <div className="corner__panel" id="corner-login"><LoginForm autoFocus /></div>}
+    <div className="parody" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setOpen(false); }}>
+      <div className="parody__box" role="dialog" aria-modal="true" aria-labelledby="parody-t" aria-describedby="parody-d">
+        <h2 className="parody__title" id="parody-t"><Icon name="info" size={22} />This is a parody, not a real bank</h2>
+        <div className="parody__body" id="parody-d">
+          <p><strong>GIFbank is a fictional bank.</strong> This page is a layout study for the Golden Grids system — a rebuild of a bank page's design. It is not TD Bank and is not affiliated with it.</p>
+          <p>There is no real sign-in here and no real account. Nothing you do on these pages is sent anywhere or kept outside your own browser. Never enter real banking details into a page you reached from a link.</p>
+        </div>
+        <div className="parody__acts">
+          <button ref={go} type="button" className="btn btn--green" onClick={enter}>Continue to the demo</button>
+          <button type="button" className="btn btn--outline" onClick={() => setOpen(false)}>Go back</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** The header's corner: the Enter control, in place of the old sign-in dropdown. */
+function CornerEnter() {
+  return (
+    <div className="corner">
+      <button type="button" className="corner__btn" onClick={openEnter}>Enter <Icon name="chevron" size={16} /></button>
     </div>
   );
 }
@@ -89,7 +111,7 @@ function PublicHeader() {
           <span className="util" title="Help"><Icon name="help" size={20} /><span className="visually-hidden">Help</span></span>
           <span className="util" title="Find Us"><Icon name="pin" size={20} /><span className="visually-hidden">Find Us</span></span>
           <span className="util util--country"><Icon name="globe" size={20} />United States<Icon name="chevron" size={14} /></span>
-          <CornerLogin />
+          <CornerEnter />
         </div>
       </div>
       <nav className="pub__nav" aria-label="Products"><div className="wrap"><ul>{PRODUCT_NAV.map((p) => <li key={p}><span>{p}{p !== "GIF Premier" && <Icon name="chevron" size={14} />}</span></li>)}</ul></div></nav>
@@ -171,6 +193,7 @@ export function PublicPage({ source, children }: { source: { label: string; url:
       <main id="content" className="main">{children}</main>
       <Footer />
       <Disclosure source={source} />
+      <ParodyModal />
     </>
   );
 }
@@ -189,13 +212,14 @@ export function BankPage({ current, title, source, children }: { current: string
         {s.in ? children : (
           <div className="wrap gate">
             <h1 className="gate__title">{title}</h1>
-            <p className="gate__note"><Icon name="lock" size={18} />You're logged out. For your security, log in to see your accounts.</p>
-            <div className="gate__form"><LoginForm headingLevel={2} /></div>
+            <p className="gate__note"><Icon name="lock" size={18} />This is the signed-out view of a demo. There is no real sign-in; Enter opens the sample accounts.</p>
+            <div className="gate__acts"><EnterButton /></div>
           </div>
         )}
       </main>
       <Footer bank={s.in} />
       <Disclosure source={source} />
+      <ParodyModal />
     </>
   );
 }

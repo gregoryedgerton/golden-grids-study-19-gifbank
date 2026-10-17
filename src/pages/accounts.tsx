@@ -80,7 +80,7 @@ function App() {
   useEffect(() => { if (open && location.hash === "#transfer") document.getElementById("transfer")?.scrollIntoView(); }, [open]);
   const last = STATEMENT_MONTHS[STATEMENT_MONTHS.length - 1];
   return (
-    <BankPage current="accounts" title="Accounts" source={[REFERENCE.myTd, REFERENCE.onlineBanking, REFERENCE.login]}>
+    <BankPage current="accounts" title="Accounts" source={[REFERENCE.myTd, REFERENCE.onlineBanking]}>
       <div className="wrap greet">
         <h1 className="greet__title">{greeting()}, {CUSTOMER.first}</h1>
         <p className="note">Last log in: {CUSTOMER.lastLogin}</p>

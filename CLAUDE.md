@@ -302,3 +302,31 @@ opened in StackBlitz at `https://stackblitz.com/~/github.com/gregoryedgerton/gol
 - Do not append `?file=` to the `~/github.com` link; it made the IDE fail to
   start in testing. The classic `/github/` importer accepts `?file=` but waits
   on a WebSocket and can stall at "Cloning repo from GitHub".
+
+## Safe Browsing remediation (2026-10)
+
+Google Safe Browsing flagged this study as a **deceptive site**. The trigger was the
+demo Online Banking sign-in, not the content around it: a bank-styled page with
+**User name / Password fields and a Log In button** reads as phishing to the heuristic
+however clearly the page is labelled a study, and the public home page additionally
+linked out to the reference bank's **real** sign-in portal (`onlinebanking.tdbank.com`).
+
+Nothing was ever collected here — the fields were read-only and inert, and the study
+sends nothing anywhere — so this is about removing the *appearance* of credential
+collection, which is what the scanner reads.
+
+**What changed**
+- Removed the sign-in form (`LoginForm`) and its `DEMO_USER` / `DEMO_PASSWORD_SHOWN`
+  constants. There are no username or password inputs anywhere in the study now.
+- The corner control and the Online Banking box now say **Enter**. Choosing it opens a
+  **parody notice** (`ParodyModal` in `src/lib/Page.tsx`) stating plainly that GIFbank is
+  fictional and there is no real sign-in, then continues to the demo accounts — the
+  destination the old Log In button had (`accounts.html`).
+- Dropped the home page's citation link to the real bank's sign-in portal (the `login`
+  entry in `REFERENCE`, `src/content.ts`); the page now cites the editorial Online
+  Banking description instead.
+
+**Do not** reintroduce username/password inputs, a sign-in form, or any link to a real
+bank's sign-in in this study — or in the sibling `golden-grids-study-*` studies, which
+share this pattern. After deploying, request a review in Google Search Console
+(Security Issues) so the flag is lifted.

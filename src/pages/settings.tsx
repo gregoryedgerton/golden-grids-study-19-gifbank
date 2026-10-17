@@ -157,8 +157,8 @@ function Security() {
   return (
     <>
       <ul className="setrows">
-        <Row label="User name" value="gifbank_demo" />
-        <Row label="Password" value={<>Last changed Aug 3, 2026<p className="note">The demo sign-in's password can't be changed, and this study never asks for one.</p></>} />
+        {/* Safe Browsing remediation (2026-10): the User name / Password rows were removed with the demo sign-in. See CLAUDE.md. */}
+        <Row label="Sign-in" value={<>None<p className="note">GIFbank is a parody for a layout study. There is no user name or password, and this study never asks for one.</p></>} />
         <Row label="Single-use security codes" value={`Texted to (XXX) XXX-${last4} when you sign in from a new device`} />
       </ul>
       <div className="panel">
