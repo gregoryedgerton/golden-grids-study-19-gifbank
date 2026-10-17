@@ -1,0 +1,201 @@
+GIFcommit00020
+
+# Layout study — TD Bank, as GIFbank
+
+**Live:** [`https://gregoryedgerton.github.io/golden-grids-study-19-tdbank/`](https://gregoryedgerton.github.io/golden-grids-study-19-tdbank/)
+
+An unaffiliated layout study. It rebuilds [TD Bank's](https://www.td.com/us/en/personal-banking)
+personal banking home page and the signed-in Online Banking behind its log-in
+as stacked golden grids, for a fictional bank under a parody name, GIFbank,
+and a fictional customer. The log-in sits in the header's corner, filled in
+for the reader; it signs in to a demo of five screens' worth of banking: the
+accounts, each account's activity, statements and tax documents, and Profile
+& Settings. Every number is computed from one set of invented transactions,
+so the arithmetic holds on every page, and transfers the reader makes change
+every balance at once. None of the reference's sentences, photographs or marks
+is reproduced. Built with [Golden Grids](https://github.com/gregoryedgerton/golden-grids)
+from the [study template](https://github.com/gregoryedgerton/golden-grids-study-template).
+
+## Reference
+
+- **The public home page**, read and captured at 390, 820 and 1440 on
+  2026-10-16: a green line of segments (Personal, Small Business, Commercial,
+  Investing & Wealth, About Us); a white header with the square green mark,
+  search, help, find us, the country and **Log In in the top right corner**,
+  on a pale green tint; the products (Checking & Savings, Credit Cards,
+  Lending, Learning, the premium tier); a hero of a photograph, a green panel
+  with an offer and an Online Banking box with Login and Sign-Up; "What can
+  we help you find?" as a row of circled icons; ways to manage an account;
+  reasons to bank; questions; and the footer's link groups.
+- **The Online Banking sign-in**: user name, password, Remember me, Log in,
+  and the links for a forgotten password and signing up.
+- **The signed-in pages were not seen.** The study does not sign in to
+  anyone's account. They are built from the reference's own descriptions of
+  [Online Banking](https://www.td.com/us/en/personal-banking/online-banking),
+  [My TD](https://www.td.com/us/en/personal-banking/my-td) and
+  [online statements](https://www.tdbank.com/getmore/OnlineStatements.html):
+  every account on one page; an available balance that drops at once for a
+  card purchase, which shows as pending; statements online for seven years
+  and paper statements that can be turned off; balance and deposit alerts;
+  masked account numbers; single-use security codes; Account Home, Make a
+  Transfer, Pay Bills, Send Money and Secure Messages as the quick links. The
+  arrangement of those screens is the study's reading of how such pages work.
+
+No capture of the reference is kept: its pages carry its photographs and
+marks.
+
+**Register:** white ground, the bright green `#008a00` of the segments bar,
+the signed-in tabs and the buttons, the dark green `#1a5336` of headings,
+links in `#038203`, a pale green tint `#f6faf0` behind the log-in, grey rules,
+square corners and square buttons. The reference's face, TD Graphik, is
+proprietary; Figtree stands in. The reference has one scheme; the dark scheme
+is the study's own, the same greens turned over, and follows the device or the
+Display setting in Profile & Settings.
+
+## Approach
+
+The reference sets accounts as a list of rows, an account's balances as a line
+above its activity, and the home page as a hero and rows of equal tiles. The
+study sets them as golden grids:
+
+- **The accounts are a grid**, checking in the largest square with its
+  available balance as large type, savings next, the card and the mortgage in
+  the smallest; each square opens the account.
+- **An account's balances are a grid**: the headline balance (available for
+  checking and savings, current for the card, principal for the mortgage) in
+  the largest square, then the figures that explain it (current, pending,
+  money in and out; or available credit, statement balance, minimum due, cash
+  back; or next payment, rate, escrow, interest paid).
+- **Spending this month is a grid** by category, the largest category in the
+  largest square, from checking and the card.
+- **A statement opens to a grid of its summary**, the ending balance largest,
+  above the statement itself.
+- **Profile & Settings** opens on its six sections as two grids of three.
+- **The home page** sets the hero (photograph, offer, Online Banking), the
+  products, the ways to manage an account and the reasons to bank as grids.
+
+Flat modules stay flat: the headers and tabs, the log-in, the quick actions,
+the transfer form, the activity table, the statement document, the lists of
+statements and documents, settings rows, the questions and the footer.
+
+| Page | Band | Cells |
+| --- | --- | --- |
+| Home | Hero | the photograph, the offer, Online Banking |
+| | Products | seven products dealt into four and three |
+| | Manage | a photograph and three ways to manage an account |
+| | Anywhere | three photographs with reasons to bank |
+| Accounts | Your accounts | checking, savings, card, mortgage |
+| | Spending this month | the five largest categories |
+| Account | Balances | five figures for the kind of account |
+| Statements | At a glance | five figures from the statement's summary |
+| Settings | Home | six sections in two bands of three |
+
+**What answers back.** The corner log-in and the Online Banking box open the
+same filled-in form; Log In signs in, Remember me is kept, and Log Out (in the
+header and the name menu) signs out. A signed-in page reached while signed out
+shows the log-in in its place. Hide balances turns every figure to dots. Make a
+Transfer runs in three steps (details, review, confirmation with a number),
+checks the amount against what is available or owed, moves money between
+checking and savings, pays the card or adds principal to the mortgage, posts
+today, and can be cancelled. The activity table filters by period (since the
+last statement, 30 or 90 days, the year, any statement month), by type and by
+words, opens each row to its detail (a check opens to a drawing of the check),
+shows more, and downloads what it shows as CSV. Statements choose an account
+and a year, open a month in place, step to the previous or next, and print on
+their own. Tax documents open their figures. Delivery preferences switch each
+account to online only, with consent. Settings renames accounts (the name
+changes on every page), edits the address, email and mobile number, sets
+alerts and their thresholds, turns two-step verification on and off, sets the
+display and language, and resets everything the study keeps.
+
+## Content and provenance
+
+- **The arithmetic.** [`src/bank/ledger.ts`](src/bank/ledger.ts) holds the
+  books: four accounts, opening balances on 1 January 2025, and a seeded
+  program that writes every transaction from then to 16 October 2026 (771 of
+  them): payroll twice a month (a business day early on weekends, with a raise
+  in March 2026), the mortgage's automatic payment, a standing transfer to
+  savings, the card's autopay of its statement balance in full, bills,
+  groceries, coffee, fuel, checks to the lawn service, three foreign-ATM fees,
+  tax refunds, a holiday month and a summer trip. Balances, running balances,
+  statements, savings interest (accrued daily on the closing balance, paid
+  monthly), the mortgage's split of each payment into principal, interest and
+  escrow (the standard fixed-rate formula on an invented loan of $340,000 at
+  6.125% for 30 years), escrow disbursements for property tax and insurance,
+  the card's statement, minimum payment and cash back, the 2025 tax figures,
+  spending by category and what is coming up are all computed from those
+  transactions. Nothing is typed in as a total.
+- **The check.** [`captures/ledger-check.mjs`](captures/ledger-check.mjs)
+  (`npm run check:ledger`, `--own` to add reader transfers) confirms that
+  every running balance follows from the one before; that each statement's
+  beginning balance plus its activity is its ending balance, that its summary
+  rows add up and that each ending balance is the next beginning; that no
+  deposit account is overdrawn and escrow never goes below zero; that both
+  sides of every transfer agree; that each card autopay equals the statement
+  balance it pays; and that each mortgage payment splits exactly. It passes.
+- **The customer and the bank are invented.** Jordan Ellery, an address on an
+  invented street, telephone numbers in the 555-01 range set aside for
+  fiction, an email at example.com. Account numbers are shown as Xs with four
+  digits that belong to no one. Merchants, the employer, utilities and payees
+  have invented names. GIFbank, N.A. is fictional; the footer says it is not
+  a bank and not FDIC-insured.
+- **The sign-in is a demo.** The user name and password are filled in and
+  read-only, the password is dots in an ordinary text field (so no browser
+  offers to save it), there is no other way in, and the form says never to
+  type real bank details into a page reached from a link. Email and mobile
+  fields accept only `.example` addresses and 555-01 numbers. Everything the
+  reader does is kept in this browser's local storage (`gg19b-*`) and sent
+  nowhere. `?demo` on a signed-in page signs in, for captures.
+- **Photographs** are in [`src/photos.json`](src/photos.json), each with its
+  author, licence, page and alt text, from Wikimedia Commons under CC BY 2.0,
+  CC BY-SA 4.0 or CC0; none shows a person or a bank. A photograph of a laptop
+  was dropped for its maker's name on the bezel.
+- **Icons and the mark** are the study's own drawings. **Text** is the
+  study's own.
+
+## Notes for review
+
+Observations for whoever reviews this study, recorded without a verdict.
+Whether the layout suits the page is assessed separately, after every study
+has been reviewed.
+
+- **The signed-in pages were not seen.** Their arrangement is inferred from
+  the reference's public descriptions and from how online banking commonly
+  works; details such as the order of the tabs and the columns of the activity
+  table are the study's.
+- **No FDIC sign.** The reference's top bar carries the FDIC's official
+  sign; a fictional bank cannot, so the study has no such bar, and its footer
+  says GIFbank is not insured.
+- **The hero sits inside the page width.** The reference's hero runs edge to
+  edge at a fixed height; a grid of three squares at the full width of a wide
+  screen would be about 900px tall, so the study keeps it inside the page's
+  column.
+- **Pending items are fixed.** Three transactions on the last two days are
+  pending; nothing settles over time, and there are no bank holidays in the
+  books.
+- **Card interest is zero throughout**, because autopay pays each statement in
+  full; the statement shows the interest line at $0.00 and the minimum
+  payment warning anyway.
+- **Statements begin in January 2025** where the reference keeps seven years.
+- **Accessibility.** `captures/scan.cjs` reports no overflow, no fitted line
+  under 12px and no axe violations in Chrome and WebKit at 390, 820 and 1440,
+  light and dark, on every page and its variants (signed in and out).
+  `captures/cells.cjs` opens every expandable square at 390. No screen-reader
+  user has tested it.
+
+## Disclosure
+
+Every page says it is a study in three places, all read from
+[`src/study.json`](src/study.json): the page's metadata, a sticky notice at the
+top, and "About this layout study", the last element on the page.
+
+## Running it
+
+```bash
+npm install
+npm run dev
+npm run check:ledger
+NODE_PATH=<a node_modules with playwright> node captures/scan.cjs http://localhost:5173/ index "accounts?demo" "account?a=card&demo" "statements?a=checking&m=2026-09&demo" "settings?demo"
+```
+
+Pushing to `main` deploys to GitHub Pages.

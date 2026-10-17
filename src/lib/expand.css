@@ -1,0 +1,105 @@
+/* Expand a cell. The cell does not scroll and it does not float over the
+   band: the band GROWS to fit it and everything below moves down. The
+   library's grid is a fixed proportion (an inline aspect-ratio), so while a
+   cell is open that proportion is released, the sibling slots are taken out
+   of the flow, and the expanded slot returns to normal flow where its
+   content sets the height. The library is not touched; its inline geometry
+   is overridden only for the duration. */
+.golden-grid:has(.cell--expanded) {
+  aspect-ratio: auto !important;
+  height: auto;
+}
+.golden-grid:has(.cell--expanded) > .golden-grid__box {
+  display: none;
+}
+.golden-grid > .golden-grid__box:has(> .cell--expanded) {
+  display: block;
+  position: relative !important;
+  left: auto !important; top: auto !important;
+  width: 100% !important; height: auto !important;
+}
+/* The summary the panel replaces: out of the flow, so the band's height is
+   the panel's height and nothing sits above or below it. */
+.cell--expanded > :not(.cell) { display: none; }
+/* The mosaic's grid bleeds 4px past its clipping wrap for its gutters; while
+   a cell is open it sits flush so the panel's edges are not cut. */
+.rounded .golden-grid:has(.cell--expanded) { width: 100%; margin: 0; }
+
+.cell {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--bg, #fff); color: var(--fg, #222);
+  outline: 1px solid var(--line, #ddd); outline-offset: -1px;
+}
+.cell__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 24px; border-bottom: 1px solid var(--line, #ddd);
+  /* The band can be taller than the viewport once open; the head is sticky
+     so Close stays reachable, at the top right where a reader looks for it. */
+  position: sticky; top: var(--study-banner-h, 0px); z-index: 1;
+  background: var(--bg, #fff);
+}
+.cell__title { margin: 0; min-width: 0; flex: 1 1 auto; font: 500 22px/26px var(--font, inherit); letter-spacing: -0.02em; }
+/* The Close is the study's SECONDARY CTA. A study declares the --cta2-* tokens
+   once (at the end of its styles.css), from its own secondary button, and every
+   expanded cell's Close follows; the fallbacks are a plain outlined button. */
+.cell__close {
+  display: inline-flex; align-items: center; gap: var(--cta2-gap, 6px);
+  min-height: var(--cta2-min-h, 40px); padding: var(--cta2-pad, 8px 14px);
+  font: var(--cta2-font, 600 15px/1.2 var(--font, inherit));
+  letter-spacing: var(--cta2-ls, 0); text-transform: var(--cta2-tt, none);
+  color: var(--cta2-color, var(--fg, #222)); background: var(--cta2-bg, transparent);
+  border: var(--cta2-border, 1px solid currentColor); border-radius: var(--cta2-radius, 4px);
+  cursor: pointer; flex: none;
+}
+.cell__close:hover {
+  background: var(--cta2-hover-bg, var(--line-light, #e8e8e8));
+  color: var(--cta2-hover-color, var(--cta2-color, var(--fg, #222)));
+  border: var(--cta2-hover-border, var(--cta2-border, 1px solid currentColor));
+}
+.cell__x { font: 400 1.25em/1 var(--cta2-x-font, inherit); }
+.cell__close:focus-visible { outline: 2px solid var(--cta2-focus, var(--fg, #222)); outline-offset: 2px; }
+.cell__body { padding: 24px; font: 400 16px/24px var(--font, inherit); }
+@media (max-width: 639px) { .cell__head { padding: 12px 16px; } .cell__body { padding: 16px; } }
+
+/* Contents the study puts in expanded cells. */
+.cell__photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+.cell__photos figure { margin: 0; }
+.cell__photos img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; }
+.cell__photos figcaption { font: 400 14px/18px var(--font, inherit); color: var(--muted, #6c6c6c); margin-top: 6px; }
+.cell__group { margin: 0 0 24px; }
+.cell__group:last-child { margin-bottom: 0; }
+.cell__group h4 { margin: 0 0 8px; font: 500 16px/20px var(--font, inherit); }
+.cell__group ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+@media (min-width: 640px) { .cell__group ul { grid-template-columns: 1fr 1fr; } }
+.cell__review { padding: 16px 0; border-top: 1px solid var(--line, #ddd); }
+.cell__review:first-of-type { border-top: 0; padding-top: 0; }
+.cell__review p { margin: 0 0 8px; }
+.cell__prose p { margin: 0 0 16px; max-width: 62ch; }
+.cell__prose ul { margin: 0 0 16px; padding-left: 1.2em; }
+.cell__prose > :last-child { margin-bottom: 0; }
+.cell__count { color: var(--muted, #6c6c6c); font: 400 14px/18px var(--font, inherit); margin: 0 0 16px; }
+
+/* --- An image is its own control ---------------------------------------- */
+/* The button covers the figure so the whole picture is the hit area; the alt
+   text stays on the image and the button carries its own label. */
+.media__open {
+  position: absolute; inset: 0;
+  border: 0; background: transparent; padding: 0;
+  cursor: zoom-in;
+}
+.media__open:focus-visible { outline: 3px solid var(--fg, #222); outline-offset: -3px; }
+.media__open::after {
+  content: ""; position: absolute; inset: 0;
+  background: rgba(0, 0, 0, 0); transition: background 0.15s ease;
+}
+.media__open:hover::after { background: rgba(0, 0, 0, 0.12); }
+@media (prefers-reduced-motion: reduce) { .media__open::after { transition: none; } }
+/* A caption sits above the hit area so it stays legible. */
+.media__caption { z-index: 1; }
+
+/* A photograph shown at its own size inside an expanded cell. */
+.cell__photo { margin: 0; }
+.cell__photo img { display: block; width: 100%; max-height: 70svh; object-fit: contain; border-radius: var(--radius-sm, 8px); background: var(--line-light, #f2f2f2); }
+.cell__photo figcaption { margin-top: 12px; font: 500 16px/20px var(--font, inherit); }
+.cell__nav { display: flex; gap: 8px; margin-top: 16px; }

@@ -1,0 +1,47 @@
+/* The study's notice and disclosure. Namespaced, self-contained and the same
+   in every study: a study's own stylesheet can change completely without
+   touching them, and they never look like part of the site being studied. */
+.gg-study-banner {
+  position: sticky; top: 0; z-index: 2147482000;   /* over the page, under the study tools */
+  margin: 0; padding: 7px 16px;
+  background: #111111; color: #ffffff; color-scheme: dark;
+  font: 400 13px/1.4 -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: 0; text-transform: none; text-align: center;
+  border-bottom: 2px solid #ffd54a;
+}
+.gg-study-banner p { margin: 0 auto; max-width: none; font: inherit; color: inherit; }
+.gg-study-banner strong { font-weight: 700; color: #ffd54a; }
+.gg-study-banner a { color: #ffffff; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.gg-study-banner a:focus-visible, .gg-study a:focus-visible { outline: 2px solid #ffd54a; outline-offset: 2px; }
+/* Anchors land below the banner. */
+:root { scroll-padding-top: calc(var(--study-banner-h, 0px) + 12px); }
+
+.gg-study {
+  margin: 0; padding: 40px 0 56px;
+  background: #111111; color: #e6e6e6; color-scheme: dark;
+  font: 400 15px/1.6 -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: 0; text-transform: none; text-align: left;
+  border-top: 4px solid #ffd54a;
+}
+.gg-study__wrap { width: min(100% - 32px, 1140px); margin-inline: auto; }
+#about-this-study :is(h2, h3, p, li, summary, details, ul, a, strong) { background: none; border: 0; box-shadow: none; border-radius: 0; }
+#about-this-study h2, #about-this-study h3, #about-this-study p, #about-this-study li, #about-this-study summary { font: inherit; color: inherit; letter-spacing: 0; text-transform: none; }
+#about-this-study h2 { margin: 0 0 12px; font-size: 22px; font-weight: 700; line-height: 1.25; color: #ffffff; }
+#about-this-study h2::after, #about-this-study h3::after { content: none; }
+#about-this-study h3 { margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #ffd54a; }
+#about-this-study p { margin: 0 0 12px; max-width: 100ch; }
+#about-this-study ul { margin: 0 0 12px; padding-left: 1.15em; list-style: disc; display: block; }
+#about-this-study li { margin: 0 0 4px; padding: 0; display: list-item; }
+#about-this-study a { color: #ffffff; text-decoration: underline; text-underline-offset: 2px; }
+#about-this-study strong { font-weight: 700; color: #ffffff; }
+#about-this-study .gg-study__notice { font-size: 17px !important; font-weight: 600 !important; color: #ffffff !important; }
+.gg-study__grid { display: grid; gap: 8px 40px; grid-template-columns: minmax(0, 1fr); margin: 20px 0 8px; }
+@media (min-width: 800px) { .gg-study__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+#about-this-study .gg-study__credits { margin: 8px 0 16px; padding-top: 16px; border-top: 1px solid #3a3a3a; }
+#about-this-study .gg-study__credits details { margin: 0 0 12px; }
+#about-this-study .gg-study__credits summary { cursor: pointer; font-weight: 700; color: #ffffff; min-height: 24px; }
+#about-this-study .gg-study__foot { margin: 20px 0 0 !important; padding-top: 16px; border-top: 1px solid #3a3a3a; font-size: 13px !important; color: #bdbdbd !important; }
+@media (max-width: 639px) { .gg-study-banner { font-size: 12px; padding: 6px 12px; } }
+@media print { .gg-study-banner { position: static; } }
+/* The skip link is the first stop in the tab order and must show over the banner. */
+a.skip { z-index: 2147482500; }

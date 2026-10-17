@@ -1,0 +1,71 @@
+/* Study tools. Everything here is namespaced and self-contained so a study's
+   own stylesheet can change completely without touching it. The panel sits on
+   its own stacking layer above the page. */
+.gg-tools {
+  position: fixed; top: calc(var(--study-banner-h, 0px) + 12px); right: 12px;
+  z-index: 2147483000;
+  isolation: isolate;
+  font: 500 13px/1.4 -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif;
+  color: #fff;
+  color-scheme: dark;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+.gg-tools__tab {
+  font: inherit; color: inherit;
+  background: #111; border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px; padding: 6px 12px; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.gg-tools__tab:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.gg-tools__panel {
+  width: 260px; padding: 12px 14px;
+  background: #111; border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.gg-tools__panel[hidden] { display: none; }
+.gg-tools__meta { margin: 0 0 10px; color: rgba(255, 255, 255, 0.7); font-weight: 400; }
+.gg-tools__meta span { color: #fff; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; }
+.gg-tools__row { display: flex; align-items: center; gap: 10px; padding: 6px 0; cursor: pointer; }
+.gg-tools__row input { width: 16px; height: 16px; margin: 0; accent-color: #fff; }
+.gg-tools__row kbd { margin-left: 6px; font: 500 11px/1 ui-monospace, monospace; padding: 2px 5px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 4px; color: rgba(255, 255, 255, 0.8); }
+.gg-tools__hint { margin: 10px 0 0; color: rgba(255, 255, 255, 0.6); font-weight: 400; font-size: 12px; }
+
+/* --- Inspect overlay --------------------------------------------------- */
+/* Band readouts are hidden until notes are on. */
+.band__note { display: none; }
+html[data-notes="on"] .band__note { display: block; }
+
+/* Every grid: marching ants on its edge, drawn over the content and never
+   catching the pointer. Black-and-white so it reads on any ground. */
+html[data-inspect="on"] .golden-grid { counter-reset: gg-slot; }
+html[data-inspect="on"] .golden-grid::after {
+  content: ""; position: absolute; inset: 0; z-index: 20; pointer-events: none;
+  background-image:
+    linear-gradient(90deg, #000 50%, #fff 50%), linear-gradient(90deg, #000 50%, #fff 50%),
+    linear-gradient(0deg, #000 50%, #fff 50%), linear-gradient(0deg, #000 50%, #fff 50%);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 12px 2px, 12px 2px, 2px 12px, 2px 12px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  animation: gg-ants 0.6s linear infinite;
+}
+@keyframes gg-ants {
+  to { background-position: 12px 0, -12px 100%, 0 -12px, 100% 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-inspect="on"] .golden-grid::after { animation: none; }
+}
+/* Every slot: a dotted edge and a DOM-order label. */
+html[data-inspect="on"] .golden-grid > .golden-grid__box {
+  outline: 1px dotted rgba(0, 0, 0, 0.55); outline-offset: -1px;
+  counter-increment: gg-slot;
+}
+html[data-inspect="on"] .golden-grid > .golden-grid__box::before {
+  content: counter(gg-slot);
+  position: absolute; left: 4px; top: 4px; z-index: 21; pointer-events: none;
+  min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box;
+  font: 700 11px/18px -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif; text-align: center;
+  color: #fff; background: #000; border: 1px solid #fff; border-radius: 4px;
+}
+/* The placeholder: magenta ants and a P. */
+html[data-inspect="on"] .golden-grid > .golden-grid__box--placeholder { outline: 2px dashed #ff2d9b; }
+html[data-inspect="on"] .golden-grid > .golden-grid__box--placeholder::before { content: "P"; background: #ff2d9b; }

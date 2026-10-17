@@ -1,0 +1,42 @@
+{
+ "hero": {
+  "credit": "Shixart1985",
+  "licence": "CC BY 2.0",
+  "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Cozy_living_room_setting_with_a_yellow_sofa_and_a_coffee_table_adorned_with_cups_and_a_flower_pot.jpg",
+  "source": "Wikimedia Commons",
+  "w": 1920,
+  "h": 1282,
+  "alt": "A living room with an orange sofa, a low table set with two cups, and a window behind."
+ },
+ "porch": {
+  "credit": "Andre Carrotflower",
+  "licence": "CC BY-SA 4.0",
+  "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Edwin_M._Husted_House,_Buffalo,_New_York_-_20210718.jpg",
+  "source": "Wikimedia Commons",
+  "w": 1920,
+  "h": 2560,
+  "alt": "A blue two-storey house with a front porch and a small lawn."
+ },
+ "jar": {
+  "credit": "Anna Frodesiak",
+  "licence": "CC0",
+  "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "page": "https://commons.wikimedia.org/wiki/File:Swear_jar.jpg",
+  "source": "Wikimedia Commons",
+  "w": 1920,
+  "h": 2406,
+  "alt": "A glass jar holding folded banknotes, on a blue checked cloth."
+ },
+ "kitchen": {
+  "credit": "Shixart1985",
+  "licence": "CC BY 2.0",
+  "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Modern_kitchen_and_dining_area_with_wooden_table_and_chairs_during_daytime.jpg",
+  "source": "Wikimedia Commons",
+  "w": 1920,
+  "h": 1280,
+  "alt": "A kitchen with a round table and chairs by a window."
+ }
+}

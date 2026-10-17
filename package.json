@@ -1,0 +1,25 @@
+{
+  "name": "golden-grids-study-19-tdbank",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Golden Grids layout study 19: TD Bank's home page and a simulated Online Banking session (accounts, activity, statements, settings), rebuilt as stacked golden grids under the GIFbank brand for a fictional customer.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "check:ledger": "node --experimental-strip-types captures/ledger-check.mjs"
+  },
+  "dependencies": {
+    "@gifcommit/golden-grids": "^5.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.3.0"
+  }
+}

@@ -1,0 +1,8 @@
+{
+ "hero": {"q": ["living room armchair floor lamp", "reading nook armchair window", "cozy living room interior sofa"]},
+ "desk": {"q": ["laptop on wooden desk home office", "home office desk lamp plant"]},
+ "porch": {"q": ["house front porch new jersey", "colonial house front door porch", "victorian house porch haddonfield"]},
+ "jar": {"q": ["coins in glass jar", "jar of coins"]},
+ "kitchen": {"q": ["kitchen table window light", "breakfast table coffee window"]},
+ "street": {"q": ["haddonfield new jersey kings highway", "main street small town new jersey shops"]}
+}
