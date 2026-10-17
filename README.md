@@ -218,10 +218,6 @@ has been reviewed.
   real money; the year-end documents are GIFbank's own statements rather than
   any government's tax forms, and the tax refund comes from an unnamed
   revenue office. Figtree has no Ƶ, so that one glyph is loaded from Inter.
-- **Profile & Settings was removed** (Greg, 2026-10-16: it did not do anything
-  "really golden griddy"). Its tab stays in the bar, for show; the name menu
-  keeps Reset the demo. Removing it also removed the study's only fields for
-  an address, an email and a phone number.
 - **Accessibility.** `captures/scan.cjs` reports no overflow, no fitted line
   under 12px and no axe violations in Chrome and WebKit at 390, 820 and 1440,
   light and dark, on every page and its variants (signed in and out).

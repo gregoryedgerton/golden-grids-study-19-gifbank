@@ -46,14 +46,13 @@ export const deliveryLabel = (id: AccountId) => (DELIVERY[id] === "online" ? "On
 export const SEGMENTS = ["Personal", "Small Business", "Commercial", "Investing & Wealth", "About Us"];
 export const PRODUCT_NAV = ["Checking & Savings", "Credit Cards", "Lending", "Learning", "GIFpremier"];
 
-/** The signed-in tabs. Three are the study's pages; Transfers opens the read-only list of transfers on Accounts; the rest are for show. */
+/** The signed-in tabs. Accounts and Statements & Documents are the study's pages; Transfers opens the read-only list of transfers on Accounts; the rest are for show. */
 export const BANK_TABS: { label: string; href?: string; match?: string[] }[] = [
   { label: "Accounts", href: PAGES.accounts, match: ["accounts", "account"] },
   { label: "Transfers", href: `${PAGES.accounts}#transfer` },
   { label: "Pay Bills" },
   { label: "Send Money" },
   { label: "Statements & Documents", href: PAGES.statements, match: ["statements"] },
-  { label: "Profile & Settings" },
 ];
 
 export const HOME = {

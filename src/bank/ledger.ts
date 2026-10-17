@@ -27,7 +27,7 @@ export type Category =
 export interface Account {
   id: AccountId;
   product: string;
-  /** What the customer calls it, which Settings can change. */
+  /** What the customer calls it. */
   nickname: string;
   /** The last four characters of the number, letters in sequence (ABCD, EFGH...): the only part ever shown. */
   last4: string;

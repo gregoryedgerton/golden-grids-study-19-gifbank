@@ -42,12 +42,8 @@ export interface Settings {
 }
 export const settings = persisted<Settings>("settings", { theme: "device", hideBalances: false });
 
-/** Applies the Display setting to the page: an explicit light or dark, or the device's own. */
-export function applyTheme(t: Settings["theme"]) {
-  const root = document.documentElement;
-  if (t === "device") delete root.dataset.theme; else root.dataset.theme = t;
-}
-applyTheme(settings.get().theme);
+/** The display follows the device; a light or dark choice kept from the removed settings page is cleared. */
+delete document.documentElement.dataset.theme;
 
 /** The books, built once per page: the reader cannot change them. */
 const BOOKS = build();
