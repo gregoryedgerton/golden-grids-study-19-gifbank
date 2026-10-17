@@ -4,11 +4,12 @@
    #038203, a pale green tint behind the log-in, grey rules, square corners
    and a geometric sans (the reference's own face is proprietary; Figtree
    stands in). The reference has one scheme; the study's dark scheme is its
-   own, the same greens turned over, and follows the device or the Display
-   setting in Profile & Settings. */
+   own, the same greens turned over, and follows the device. Money is in
+   Dollaz, written Ƶ, a glyph Figtree lacks: it comes from Inter (loaded for
+   that one character), which is why Inter is second in the stack. */
 
 :root {
-  --font: Figtree, -apple-system, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font: Figtree, Inter, -apple-system, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
   --bg: #fff; --card: #fff; --tile: #f3f6ef; --tile-2: #e6ede0; --paper: #fff;
   --fg: #1c1c1c; --fg-2: #5c5c5c; --line: #d0d0d0; --line-2: #c1c1c1;
   --green: #008a00; --green-hover: #006b00; --on-green: #fff; --head: #1a5336; --link: #038203;
@@ -312,7 +313,7 @@ button.action { cursor: pointer; }
 .act { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .act th, .act td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .act thead th { font-size: 13px; color: var(--fg-2); font-weight: 600; border-bottom: 2px solid var(--line-2); }
-.act th.num, .act td.num, .act__amt, .act__bal { text-align: right; white-space: nowrap; }
+.act th.num, .act td.num, .act td.act__amt, .act td.act__bal { text-align: right; white-space: nowrap; }
 .act__group { background: var(--tile); font-size: 13px; font-weight: 700; color: var(--head); }
 .act__date { white-space: nowrap; color: var(--fg-2); width: 70px; }
 .act__toggle { display: flex; gap: 6px; align-items: flex-start; width: 100%; min-height: 24px; padding: 0; border: 0; background: none; text-align: left; cursor: pointer; color: var(--fg); }

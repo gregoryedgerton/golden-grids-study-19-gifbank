@@ -29,7 +29,7 @@ export interface Account {
   product: string;
   /** What the customer calls it, which Settings can change. */
   nickname: string;
-  /** Only the last four digits are ever shown. */
+  /** The last four characters of the number, letters in sequence (ABCD, EFGH...): the only part ever shown. */
   last4: string;
   /** How many digits the full number has, for the mask. */
   digits: number;
@@ -73,10 +73,10 @@ export const PENDING_FROM = "2026-10-15";
 export const START = "2025-01-01";
 
 export const ACCOUNTS: Account[] = [
-  { id: "checking", product: "GIF Complete Checking", nickname: "Everyday Checking", last4: "4821", digits: 10, group: "deposit", opened: "2019-06-03" },
-  { id: "savings", product: "GIF Signature Savings", nickname: "Rainy Day Fund", last4: "7735", digits: 10, group: "deposit", opened: "2019-06-03", rate: 0.0149, apy: 0.015 },
-  { id: "card", product: "GIF Cash Credit Card", nickname: "Cash Back Card", last4: "3096", digits: 16, group: "credit", opened: "2021-02-11", limit: 1200000, rate: 0.2499, cashBack: { Groceries: 0.02, Dining: 0.02, other: 0.01 } },
-  { id: "mortgage", product: "GIF Home Mortgage", nickname: "Home Mortgage", last4: "0938", digits: 10, group: "loan", opened: "2022-06-24", rate: 0.06125, loan: { original: 34000000, termMonths: 360, firstPayment: "2022-08-01", escrow: 71500 } },
+  { id: "checking", product: "GIFcomplete Checking", nickname: "Everyday Checking", last4: "ABCD", digits: 10, group: "deposit", opened: "2019-06-03" },
+  { id: "savings", product: "GIFsignature Savings", nickname: "Rainy Day Fund", last4: "EFGH", digits: 10, group: "deposit", opened: "2019-06-03", rate: 0.0149, apy: 0.015 },
+  { id: "card", product: "GIFcash Credit Card", nickname: "Cash Back Card", last4: "IJKL", digits: 16, group: "credit", opened: "2021-02-11", limit: 1200000, rate: 0.2499, cashBack: { Groceries: 0.02, Dining: 0.02, other: 0.01 } },
+  { id: "mortgage", product: "GIFhome Mortgage", nickname: "Home Mortgage", last4: "MNOP", digits: 10, group: "loan", opened: "2022-06-24", rate: 0.06125, loan: { original: 34000000, termMonths: 360, firstPayment: "2022-08-01", escrow: 71500 } },
 ];
 export const account = (id: string) => ACCOUNTS.find((a) => a.id === id);
 
@@ -121,10 +121,10 @@ function principalBefore(firstPayment: string, before: string) {
 }
 OPENING.mortgage = principalBefore(MORTGAGE.loan!.firstPayment, START);
 
-// --- The merchants and payees, all invented ------------------------------------------------
+// --- The merchants and payees: GIF names, GIF and a lowercase tail with no space ----------
 const ELECTRIC = [16800, 15200, 12100, 9600, 8800, 12400, 17100, 17600, 13300, 9400, 10900, 14900];
-const DINING = ["Larkin & Lime Kitchen", "Osteria Ventisei", "Nori Corner", "Copper Kettle Diner", "Saffron Lane", "Hearth & Hops"];
-const SHOPS = [["Parcelwise Online", 1400, 9600], ["Tidewater Books", 1200, 3800], ["Gilded Thimble Gifts", 1800, 6400], ["Ferrous Hardware", 900, 5200]] as const;
+const DINING = ["GIFbell", "GIFn'now", "GIFkitchen", "GIFdiner", "GIFsaffron", "GIFhops"];
+const SHOPS = [["GIFparcel", 1400, 9600], ["GIFbooks", 1200, 3800], ["GIFea", 1800, 6400], ["GIFdepot", 900, 5200]] as const;
 
 export interface Transfer { id: string; from: AccountId; to: AccountId; amount: number; date: string; memo?: string }
 
@@ -159,21 +159,21 @@ export function build(own: Transfer[] = []): Txn[] {
     const pending = d >= PENDING_FROM;
 
     // Payroll on the 1st and the 15th, a business day early when they fall on a weekend; a raise in March 2026.
-    for (const pay of [day(y, m, 1), day(y, m, 15)]) if (prev(pay) === d) add({ account: "checking", date: d, desc: "Fernwood Design Co.", detail: "Direct deposit · Payroll", kind: "deposit", amount: d >= "2026-03-01" ? 281215 : 271240, category: "Income" });
+    for (const pay of [day(y, m, 1), day(y, m, 15)]) if (prev(pay) === d) add({ account: "checking", date: d, desc: "GIFdesign", detail: "Direct deposit · Payroll", kind: "deposit", amount: d >= "2026-03-01" ? 281215 : 271240, category: "Income" });
     // A payroll that falls early can land in the month before; catch the 1st of next month landing today.
-    if (dd >= 27) { const n1 = (m === 12 ? day(y + 1, 1, 1) : day(y, m + 1, 1)); if (prev(n1) === d && ym(n1) !== month) add({ account: "checking", date: d, desc: "Fernwood Design Co.", detail: "Direct deposit · Payroll", kind: "deposit", amount: n1 >= "2026-03-01" ? 281215 : 271240, category: "Income" }); }
+    if (dd >= 27) { const n1 = (m === 12 ? day(y + 1, 1, 1) : day(y, m + 1, 1)); if (prev(n1) === d && ym(n1) !== month) add({ account: "checking", date: d, desc: "GIFdesign", detail: "Direct deposit · Payroll", kind: "deposit", amount: n1 >= "2026-03-01" ? 281215 : 271240, category: "Income" }); }
 
     // The mortgage: automatic payment on the 1st, or the next business day.
     if (next(day(y, m, 1)) === d) {
       const interest = Math.round(principal * monthlyRate);
       const toPrincipal = MORTGAGE_PI - interest;
       principal -= toPrincipal;
-      add({ account: "checking", date: d, desc: "GIFbank Home Mortgage", detail: `Automatic payment · Mortgage XXXXXX${MORTGAGE.last4}`, kind: "transfer-out", amount: -MORTGAGE_PAYMENT, category: "Home", mirror: "mortgage" });
+      add({ account: "checking", date: d, desc: "GIFhome Mortgage", detail: `Automatic payment · Mortgage XXXXXX${MORTGAGE.last4}`, kind: "transfer-out", amount: -MORTGAGE_PAYMENT, category: "Home", mirror: "mortgage" });
       add({ account: "mortgage", date: d, desc: "Payment received", detail: "Automatic payment from Everyday Checking", kind: "payment", amount: -toPrincipal, category: "Home", split: { principal: toPrincipal, interest, escrow: MORTGAGE.loan!.escrow }, escrow: MORTGAGE.loan!.escrow, mirror: "checking" });
     }
     // Escrow pays the property tax each quarter and the homeowners insurance each March.
-    if (dd === 1 && [2, 5, 8, 11].includes(m)) add({ account: "mortgage", date: d, desc: "County tax collector", detail: "Escrow disbursement · Property tax, quarterly", kind: "escrow-out", amount: 0, escrow: -182050, category: "Home" });
-    if (dd === 15 && m === 3) add({ account: "mortgage", date: d, desc: "Larkfield Mutual Insurance", detail: "Escrow disbursement · Homeowners insurance, annual", kind: "escrow-out", amount: 0, escrow: -126800, category: "Home" });
+    if (dd === 1 && [2, 5, 8, 11].includes(m)) add({ account: "mortgage", date: d, desc: "GIFtax", detail: "Escrow disbursement · Property tax, quarterly", kind: "escrow-out", amount: 0, escrow: -182050, category: "Home" });
+    if (dd === 15 && m === 3) add({ account: "mortgage", date: d, desc: "GIFmutual", detail: "Escrow disbursement · Homeowners insurance, annual", kind: "escrow-out", amount: 0, escrow: -126800, category: "Home" });
 
     // Savings: a standing transfer on the 2nd.
     if (next(day(y, m, 2)) === d) xfer(d, "checking", "savings", 75000, "Transfer to Rainy Day Fund", "Transfer from Everyday Checking", "Recurring transfer");
@@ -181,32 +181,32 @@ export function build(own: Transfer[] = []): Txn[] {
 
     // The card's autopay on the 20th pays the last statement's balance in full.
     if (next(day(y, m, 20)) === d && cardStatement > 0) {
-      add({ account: "checking", date: d, desc: "GIF Cash Credit Card", detail: `Automatic payment · Card XXXXXXXXXXXX${ACCOUNTS[2].last4}`, kind: "transfer-out", amount: -cardStatement, category: "Transfers", mirror: "card" });
+      add({ account: "checking", date: d, desc: "GIFcash Credit Card", detail: `Automatic payment · Card XXXXXXXXXXXX${ACCOUNTS[2].last4}`, kind: "transfer-out", amount: -cardStatement, category: "Transfers", mirror: "card" });
       add({ account: "card", date: d, desc: "Payment — thank you", detail: "Automatic payment from Everyday Checking", kind: "payment", amount: -cardStatement, category: "Transfers", mirror: "checking" });
       cardBal -= cardStatement;
     }
 
     // Bills.
-    if (dd === 12) add({ account: "checking", date: d, desc: "Brightwater Electric", detail: "Bill Pay", kind: "bill", amount: -(ELECTRIC[m - 1] + between(-900, 900)), category: "Utilities" });
-    if (dd === 18) add({ account: "checking", date: d, desc: "Halyard Wireless", detail: "Automatic payment", kind: "bill", amount: -6500, category: "Utilities" });
-    if (dd === 22) add({ account: "checking", date: d, desc: "Kestrel Fiber", detail: "Automatic payment · Internet", kind: "bill", amount: -5999, category: "Utilities" });
-    if (dd === 8 && [1, 4, 7, 10].includes(m)) add({ account: "checking", date: d, desc: "Millbrook Water Utility", detail: "Bill Pay · Quarterly", kind: "bill", amount: -between(9800, 12600), category: "Utilities" });
+    if (dd === 12) add({ account: "checking", date: d, desc: "GIFelectric", detail: "Bill Pay", kind: "bill", amount: -(ELECTRIC[m - 1] + between(-900, 900)), category: "Utilities" });
+    if (dd === 18) add({ account: "checking", date: d, desc: "GIFwireless", detail: "Automatic payment", kind: "bill", amount: -6500, category: "Utilities" });
+    if (dd === 22) add({ account: "checking", date: d, desc: "GIFfiber", detail: "Automatic payment · Internet", kind: "bill", amount: -5999, category: "Utilities" });
+    if (dd === 8 && [1, 4, 7, 10].includes(m)) add({ account: "checking", date: d, desc: "GIFwater", detail: "Bill Pay · Quarterly", kind: "bill", amount: -between(9800, 12600), category: "Utilities" });
 
     // Cards and cash day to day.
     const wd = dow(d);
     if (wd === 6) {
       const week = Math.floor((toDate(d).getTime() - toDate(START).getTime()) / 6048e5);
       const amt = between(6800, 16500);
-      if (week % 2) { add({ account: "card", date: d, desc: "Corner Fig Market", detail: "Purchase", kind: "purchase", amount: amt, category: "Groceries", pending }); if (!pending) cardBal += amt; }
-      else add({ account: "checking", date: d, desc: "Corner Fig Market", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -amt, category: "Groceries", pending });
+      if (week % 2) { add({ account: "card", date: d, desc: "GIFmarket", detail: "Purchase", kind: "purchase", amount: amt, category: "Groceries", pending }); if (!pending) cardBal += amt; }
+      else add({ account: "checking", date: d, desc: "GIFmarket", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -amt, category: "Groceries", pending });
     }
-    if (r() < 0.2) add({ account: "checking", date: d, desc: "Bean & Bramble Coffee", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -between(425, 1180), category: "Dining", pending });
-    if (r() < 0.072) add({ account: "checking", date: d, desc: "Pinecrest Fuel", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -between(3400, 5800), category: "Transportation", pending });
-    if (r() < 0.035) add({ account: "checking", date: d, desc: "Maple Row Pharmacy", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -between(899, 4620), category: "Health", pending });
+    if (r() < 0.2) add({ account: "checking", date: d, desc: "GIFcoffee", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -between(425, 1180), category: "Dining", pending });
+    if (r() < 0.072) add({ account: "checking", date: d, desc: "GIFfuel", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -between(3400, 5800), category: "Transportation", pending });
+    if (r() < 0.035) add({ account: "checking", date: d, desc: "GIFpharmacy", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -between(899, 4620), category: "Health", pending });
     if (r() < 0.1) { const amt = between(2400, 9800); add({ account: "card", date: d, desc: pick(DINING), detail: "Purchase", kind: "purchase", amount: amt, category: "Dining", pending }); if (!pending) cardBal += amt; }
     if (r() < (m === 12 && y === 2025 ? 0.32 : 0.07)) { const [name, lo, hi] = pick(SHOPS); const amt = between(lo, hi); add({ account: "card", date: d, desc: name, detail: "Online purchase", kind: "purchase", amount: amt, category: "Shopping", pending }); if (!pending) cardBal += amt; }
     // Subscriptions on the card.
-    const subs: [number, string, number, Category][] = [[3, "Larkspur Fitness", 3900, "Fitness"], [7, "Reelbox", 1549, "Entertainment"], [14, "Songbird Music", d >= "2026-01-01" ? 1199 : 1099, "Entertainment"]];
+    const subs: [number, string, number, Category][] = [[3, "GIFfit", 3900, "Fitness"], [7, "GIFflix", 1549, "Entertainment"], [14, "GIFify", d >= "2026-01-01" ? 1199 : 1099, "Entertainment"]];
     for (const [on, name, amt, cat] of subs) if (dd === on) { add({ account: "card", date: d, desc: name, detail: "Recurring purchase", kind: "purchase", amount: amt, category: cat, pending }); if (!pending) cardBal += amt; }
     // ATM cash, about monthly; three times at another bank's machine, which costs a fee.
     if (dd === 9 || (dd === 10 && wd === 0)) {
@@ -215,26 +215,26 @@ export function build(own: Transfer[] = []): Txn[] {
       if (foreign && !pending) add({ account: "checking", date: d, desc: "Non-GIFbank ATM fee", detail: "Fee", kind: "fee", amount: -300, category: "Fees" });
     }
     // Checks: the lawn service, April to October, and one large repair.
-    if (dd === 5 && m >= 4 && m <= 10) add({ account: "checking", date: d, desc: `Check ${check}`, detail: "Paid to Hollis Lawn Care", kind: "check", amount: -8500, category: "Home", check: check++ });
-    if (d === "2025-05-21") add({ account: "checking", date: d, desc: `Check ${check}`, detail: "Paid to Ridgeview Auto Service", kind: "check", amount: -118420, category: "Transportation", check: check++ });
+    if (dd === 5 && m >= 4 && m <= 10) add({ account: "checking", date: d, desc: `Check ${check}`, detail: "Paid to GIFlawn", kind: "check", amount: -8500, category: "Home", check: check++ });
+    if (d === "2025-05-21") add({ account: "checking", date: d, desc: `Check ${check}`, detail: "Paid to GIFauto", kind: "check", amount: -118420, category: "Transportation", check: check++ });
 
     // Once-only events.
     const once: Record<string, () => void> = {
-      "2025-03-14": () => add({ account: "checking", date: d, desc: "U.S. Treasury", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 118200, category: "Income" }),
-      "2026-03-20": () => add({ account: "checking", date: d, desc: "U.S. Treasury", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 96400, category: "Income" }),
-      "2025-03-08": () => add({ account: "checking", date: d, desc: "Send Money from Priya S.", detail: "Dinner, split", kind: "deposit", amount: 4500, category: "Gifts" }),
-      "2025-06-14": () => add({ account: "checking", date: d, desc: "Send Money to Sam K.", detail: "Concert tickets", kind: "withdrawal", amount: -6000, category: "Gifts" }),
-      "2025-09-27": () => add({ account: "checking", date: d, desc: "Send Money from Priya S.", detail: "Groceries", kind: "deposit", amount: 3200, category: "Gifts" }),
-      "2026-01-17": () => add({ account: "checking", date: d, desc: "Send Money to Dana L.", detail: "Birthday", kind: "withdrawal", amount: -12500, category: "Gifts" }),
-      "2026-05-02": () => add({ account: "checking", date: d, desc: "Send Money from Priya S.", detail: "Cabin weekend, split", kind: "deposit", amount: 27500, category: "Gifts" }),
-      "2026-08-22": () => add({ account: "checking", date: d, desc: "Send Money to Sam K.", detail: "Ballgame", kind: "withdrawal", amount: -4000, category: "Gifts" }),
-      "2025-07-03": () => { add({ account: "card", date: d, desc: "Northbound Rail", detail: "Purchase · Tickets", kind: "purchase", amount: 18600, category: "Travel" }); cardBal += 18600; },
-      "2025-07-12": () => { add({ account: "card", date: d, desc: "Sandpiper Cottages, Cape May", detail: "Purchase · Lodging", kind: "purchase", amount: 64218, category: "Travel" }); cardBal += 64218; },
-      "2025-10-09": () => { add({ account: "card", date: d, desc: "Parcelwise Online", detail: "Return · Credit", kind: "credit", amount: -3899, category: "Shopping" }); cardBal -= 3899; },
+      "2025-03-14": () => add({ account: "checking", date: d, desc: "GIF.gov", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 118200, category: "Income" }),
+      "2026-03-20": () => add({ account: "checking", date: d, desc: "GIF.gov", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 96400, category: "Income" }),
+      "2025-03-08": () => add({ account: "checking", date: d, desc: "GIFsend from Priya S.", detail: "Dinner, split", kind: "deposit", amount: 4500, category: "Gifts" }),
+      "2025-06-14": () => add({ account: "checking", date: d, desc: "GIFsend to Sam K.", detail: "Concert tickets", kind: "withdrawal", amount: -6000, category: "Gifts" }),
+      "2025-09-27": () => add({ account: "checking", date: d, desc: "GIFsend from Priya S.", detail: "Groceries", kind: "deposit", amount: 3200, category: "Gifts" }),
+      "2026-01-17": () => add({ account: "checking", date: d, desc: "GIFsend to Dana L.", detail: "Birthday", kind: "withdrawal", amount: -12500, category: "Gifts" }),
+      "2026-05-02": () => add({ account: "checking", date: d, desc: "GIFsend from Priya S.", detail: "Cabin weekend, split", kind: "deposit", amount: 27500, category: "Gifts" }),
+      "2026-08-22": () => add({ account: "checking", date: d, desc: "GIFsend to Sam K.", detail: "Ballgame", kind: "withdrawal", amount: -4000, category: "Gifts" }),
+      "2025-07-03": () => { add({ account: "card", date: d, desc: "GIFrail", detail: "Purchase · Tickets", kind: "purchase", amount: 18600, category: "Travel" }); cardBal += 18600; },
+      "2025-07-12": () => { add({ account: "card", date: d, desc: "GIFbnb", detail: "Purchase · Lodging, Cape May", kind: "purchase", amount: 64218, category: "Travel" }); cardBal += 64218; },
+      "2025-10-09": () => { add({ account: "card", date: d, desc: "GIFparcel", detail: "Return · Credit", kind: "credit", amount: -3899, category: "Shopping" }); cardBal -= 3899; },
       // Still pending today: a coffee and a dinner from yesterday, and this morning's fuel.
-      "2026-10-15": () => { add({ account: "card", date: d, desc: "Hearth & Hops", detail: "Purchase", kind: "purchase", amount: 6412, category: "Dining", pending: true }); add({ account: "checking", date: d, desc: "Bean & Bramble Coffee", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -785, category: "Dining", pending: true }); },
-      "2026-10-16": () => add({ account: "checking", date: d, desc: "Pinecrest Fuel", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -4718, category: "Transportation", pending: true }),
-      "2026-04-11": () => { add({ account: "card", date: d, desc: "Ferrous Hardware", detail: "Purchase · Garden", kind: "purchase", amount: 21744, category: "Home" }); cardBal += 21744; },
+      "2026-10-15": () => { add({ account: "card", date: d, desc: "GIFhops", detail: "Purchase", kind: "purchase", amount: 6412, category: "Dining", pending: true }); add({ account: "checking", date: d, desc: "GIFcoffee", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -785, category: "Dining", pending: true }); },
+      "2026-10-16": () => add({ account: "checking", date: d, desc: "GIFfuel", detail: `Debit card purchase · Card XXXX${ACCOUNTS[0].last4}`, kind: "debit", amount: -4718, category: "Transportation", pending: true }),
+      "2026-04-11": () => { add({ account: "card", date: d, desc: "GIFdepot", detail: "Purchase · Garden", kind: "purchase", amount: 21744, category: "Home" }); cardBal += 21744; },
     };
     once[d]?.();
 
@@ -372,7 +372,7 @@ export function taxYear(all: Txn[], year: number) {
   return {
     interest: all.filter((t) => t.account === "savings" && t.kind === "interest" && inYear(t)).reduce((s, t) => s + t.amount, 0),
     mortgageInterest: all.filter((t) => t.account === "mortgage" && t.split && inYear(t)).reduce((s, t) => s + t.split!.interest, 0),
-    propertyTax: all.filter((t) => t.account === "mortgage" && t.desc === "County tax collector" && inYear(t)).reduce((s, t) => s - (t.escrow ?? 0), 0),
+    propertyTax: all.filter((t) => t.account === "mortgage" && t.desc === "GIFtax" && inYear(t)).reduce((s, t) => s - (t.escrow ?? 0), 0),
     principalJan1: balanceOn(all, "mortgage", `${year - 1}-12-31`),
   };
 }
@@ -391,9 +391,11 @@ export function spending(all: Txn[], from: string, to: string) {
 }
 
 // --- Showing money ------------------------------------------------------------------------------
-const fmt = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
-export const money = (cents: number) => fmt.format(cents / 100);
-/** Account numbers are masked, natively: Xs for every digit but the last four. */
+/** GIFbank's money is fictional: Dollaz, written Ƶ. A dolla is a hundred cents. */
+export const CURRENCY = { symbol: "Ƶ", name: "Dollaz" };
+const fmt = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+export const money = (cents: number) => `${cents < 0 ? "-" : ""}${CURRENCY.symbol}${fmt.format(Math.abs(cents) / 100)}`;
+/** Account numbers are masked, natively: Xs, then the four letters that end them. */
 export const mask = (a: Pick<Account, "last4" | "digits">) => `${"X".repeat(a.digits - 4)}${a.last4}`;
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -408,12 +410,12 @@ export function upcoming(all: Txn[]) {
   const cardDue = statement(all, "card", STATEMENT_MONTHS[STATEMENT_MONTHS.length - 1]);
   for (let d = addDays(TODAY, 1); d <= addDays(TODAY, 21); d = addDays(d, 1)) {
     const [y, m] = d.split("-").map(Number);
-    for (const pay of [day(y, m, 1), day(y, m, 15)]) if (prev(pay) === d) out.push({ date: d, label: "Fernwood Design Co.", detail: "Direct deposit · Payroll", amount: d >= "2026-03-01" ? 281215 : 271240, account: "checking" });
+    for (const pay of [day(y, m, 1), day(y, m, 15)]) if (prev(pay) === d) out.push({ date: d, label: "GIFdesign", detail: "Direct deposit · Payroll", amount: d >= "2026-03-01" ? 281215 : 271240, account: "checking" });
     const n1 = m === 12 ? day(y + 1, 1, 1) : day(y, m + 1, 1);
-    if (prev(n1) === d && ym(n1) !== ym(d)) out.push({ date: d, label: "Fernwood Design Co.", detail: "Direct deposit · Payroll", amount: 281215, account: "checking" });
-    if (next(day(y, m, 1)) === d) out.push({ date: d, label: "GIFbank Home Mortgage", detail: "Automatic payment", amount: -MORTGAGE_PAYMENT, account: "checking" });
+    if (prev(n1) === d && ym(n1) !== ym(d)) out.push({ date: d, label: "GIFdesign", detail: "Direct deposit · Payroll", amount: 281215, account: "checking" });
+    if (next(day(y, m, 1)) === d) out.push({ date: d, label: "GIFhome Mortgage", detail: "Automatic payment", amount: -MORTGAGE_PAYMENT, account: "checking" });
     if (next(day(y, m, 2)) === d) out.push({ date: d, label: "Transfer to Rainy Day Fund", detail: "Recurring transfer", amount: -75000, account: "checking" });
-    if (next(day(y, m, 20)) === d && ym(d) === ym(TODAY) && cardDue.closing > 0) out.push({ date: d, label: "GIF Cash Credit Card", detail: "Automatic payment of the statement balance", amount: -cardDue.closing, account: "checking" });
+    if (next(day(y, m, 20)) === d && ym(d) === ym(TODAY) && cardDue.closing > 0) out.push({ date: d, label: "GIFcash Credit Card", detail: "Automatic payment of the statement balance", amount: -cardDue.closing, account: "checking" });
   }
   return out;
 }

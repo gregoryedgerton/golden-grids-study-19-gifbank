@@ -11,7 +11,6 @@ export const PAGES = {
   accounts: `${BASE}accounts.html`,
   account: `${BASE}account.html`,
   statements: `${BASE}statements.html`,
-  settings: `${BASE}settings.html`,
 };
 export const accountHref = (id: string) => `${PAGES.account}?a=${id}`;
 export const statementHref = (id: string, month?: string) => `${PAGES.statements}?a=${id}${month ? `&m=${month}` : ""}`;
@@ -24,10 +23,11 @@ export const statementHref = (id: string, month?: string) => `${PAGES.statements
  */
 
 export const CUSTOMER = {
-  first: "Jordan",
-  last: "Ellery",
+  /** The name on every account, at Greg's direction. */
+  name: "GIFcommit",
+  first: "GIFcommit",
   since: "2019",
-  email: "jordan.ellery@example.com",
+  email: "gifcommit@example.com",
   mobile: "(856) 555-0142",
   home: "(856) 555-0187",
   address: { line1: "46 Larkmoor Lane", city: "Haddonfield", state: "NJ", zip: "08033" },
@@ -36,7 +36,7 @@ export const CUSTOMER = {
 
 /** The public site's three bars: the line of segments, the utilities with Enter in the corner, and the products. */
 export const SEGMENTS = ["Personal", "Small Business", "Commercial", "Investing & Wealth", "About Us"];
-export const PRODUCT_NAV = ["Checking & Savings", "Credit Cards", "Lending", "Learning", "GIF Premier"];
+export const PRODUCT_NAV = ["Checking & Savings", "Credit Cards", "Lending", "Learning", "GIFpremier"];
 
 /** The signed-in tabs. Three are the study's pages; Transfers is a section of Accounts; the rest are for show. */
 export const BANK_TABS: { label: string; href?: string; match?: string[] }[] = [
@@ -45,13 +45,13 @@ export const BANK_TABS: { label: string; href?: string; match?: string[] }[] = [
   { label: "Pay Bills" },
   { label: "Send Money" },
   { label: "Statements & Documents", href: PAGES.statements, match: ["statements"] },
-  { label: "Profile & Settings", href: PAGES.settings, match: ["settings"] },
+  { label: "Profile & Settings" },
 ];
 
 export const HOME = {
   hero: {
     title: "Checking that keeps up with you.",
-    body: "GIF Complete Checking waives its monthly fee when you keep $500 in the account each day, and Bill Pay, alerts and mobile deposit come with it.",
+    body: "GIFcomplete Checking waives its monthly fee when you keep Ƶ500 in the account each day, and Bill Pay, alerts and mobile deposit come with it.",
     cta: "See checking accounts",
   },
   find: [
@@ -82,7 +82,7 @@ export const HOME = {
 };
 
 export const FOOTER: { title: string; links: string[] }[] = [
-  { title: "Checking & Savings", links: ["Checking", "Savings", "Student", "CDs", "IRAs", "GIF Premier"] },
+  { title: "Checking & Savings", links: ["Checking", "Savings", "Student", "CDs", "IRAs", "GIFpremier"] },
   { title: "Credit Cards", links: ["Cash back cards", "Balance transfer cards", "No annual fee", "Build credit", "View all credit cards"] },
   { title: "Lending", links: ["Personal loans", "Mortgage", "Home equity"] },
   { title: "Manage Your Account", links: ["Enroll in Online Banking", "Download the app", "Report fraud"] },

@@ -82,7 +82,7 @@ export function TransferPanel({ initialFrom = "checking" as AccountId, initialTo
     const target = accountOf(to)!;
     if (from === to) e2.to = "Choose a different account to transfer to.";
     if (!amt.trim()) e2.amount = "Enter an amount.";
-    else if (Number.isNaN(value) || value <= 0) e2.amount = "Enter an amount in dollars and cents, such as 250.00.";
+    else if (Number.isNaN(value) || value <= 0) e2.amount = "Enter an amount in Dollaz and cents, such as 250.00.";
     else if (value > avail) e2.amount = `That's more than the ${money(avail)} available in ${name(from)}.`;
     else if (target.group !== "deposit" && value > balances(all, to).current) e2.amount = `That's more than the ${money(balances(all, to).current)} owed on ${name(to)}.`;
     setErr(e2);
@@ -103,7 +103,7 @@ export function TransferPanel({ initialFrom = "checking" as AccountId, initialTo
         <form className="transfer__form" onSubmit={review} noValidate>
           <div className="field"><label htmlFor={`${id}from`}>From</label><select id={`${id}from`} value={from} onChange={(e) => { const f = e.target.value as AccountId; setFrom(f); if (f === to) setTo(f === "checking" ? "savings" : "checking"); }}>{fromOptions.map((a) => <option key={a.id} value={a.id}>{a.nickname} {mask(a)} · {money(balances(all, a.id).available)} available</option>)}</select></div>
           <div className="field"><label htmlFor={`${id}to`}>To</label><select id={`${id}to`} value={to} onChange={(e) => setTo(e.target.value as AccountId)} aria-invalid={err.to ? true : undefined} aria-describedby={err.to ? `${id}to-e` : undefined}>{toOptions.map((a) => <option key={a.id} value={a.id}>{a.nickname} {mask(a)}{a.group === "credit" ? " · payment" : a.group === "loan" ? " · extra principal" : ""}</option>)}</select>{err.to && <p className="field__error" id={`${id}to-e`}>{err.to}</p>}</div>
-          <div className="field"><label htmlFor={`${id}amount`}>Amount</label><div className="money-input"><span aria-hidden="true">$</span><input id={`${id}amount`} inputMode="decimal" autoComplete="off" value={amt} onChange={(e) => setAmt(e.target.value)} placeholder="0.00" aria-invalid={err.amount ? true : undefined} aria-describedby={err.amount ? `${id}amount-e` : undefined} /></div>{err.amount && <p className="field__error" id={`${id}amount-e`}>{err.amount}</p>}</div>
+          <div className="field"><label htmlFor={`${id}amount`}>Amount</label><div className="money-input"><span aria-hidden="true">Ƶ</span><input id={`${id}amount`} inputMode="decimal" autoComplete="off" value={amt} onChange={(e) => setAmt(e.target.value)} placeholder="0.00" aria-invalid={err.amount ? true : undefined} aria-describedby={err.amount ? `${id}amount-e` : undefined} /></div>{err.amount && <p className="field__error" id={`${id}amount-e`}>{err.amount}</p>}</div>
           <div className="field"><label htmlFor={`${id}memo`}>Memo (optional)</label><input id={`${id}memo`} value={memo} maxLength={40} onChange={(e) => setMemo(e.target.value)} /></div>
           <div className="field"><span className="field__label">Date</span><p className="field__static"><Icon name="calendar" size={18} />Today, {dateLabel(TODAY)}</p></div>
           <p className="row"><button type="submit" className="btn btn--green">Review transfer</button></p>

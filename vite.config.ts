@@ -13,8 +13,8 @@ function pagesBase(): string {
   return `/${repo}/`;
 }
 
-// Five pages, no router, plain relative links; an account and its statements take a query (?a=, ?m=), settings a section (?s=).
-const pages = ["index", "accounts", "account", "statements", "settings"];
+// Four pages, no router, plain relative links; an account and its statements take a query (?a=, ?m=, ?tab=).
+const pages = ["index", "accounts", "account", "statements"];
 
 export default defineConfig({
   base: pagesBase(),

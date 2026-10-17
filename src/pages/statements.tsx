@@ -58,7 +58,7 @@ function Document({ s, a, onPrev, onNext }: { s: Statement; a: Account; onPrev?:
         <div><h2 id="st-title" className="statement__title">{credit ? "Credit card statement" : loan ? "Mortgage statement" : "Statement of account"}</h2><p>{a.product}</p></div>
       </header>
       <div className="statement__parties">
-        <address>{CUSTOMER.first} {CUSTOMER.last}<br />{set.address.line1}<br />{set.address.city}, {set.address.state} {set.address.zip}</address>
+        <address>{CUSTOMER.name}<br />{set.address.line1}<br />{set.address.city}, {set.address.state} {set.address.zip}</address>
         <dl className="facts facts--tight">
           <div><dt>Account</dt><dd>{mask(a)}</dd></div>
           <div><dt>Statement period</dt><dd>{dateLabel(s.start)} – {dateLabel(s.end)}</dd></div>
@@ -163,8 +163,8 @@ function Tax({ accts }: { accts: Account[] }) {
   const t = taxYear(all, 2025);
   const sav = accts.find((x) => x.id === "savings")!, mort = accts.find((x) => x.id === "mortgage")!;
   const docs = [
-    { id: "1099", name: "Form 1099-INT, 2025", acct: sav, lines: [["Interest income (box 1)", t.interest]] as [string, number][] },
-    { id: "1098", name: "Form 1098, 2025", acct: mort, lines: [["Mortgage interest received (box 1)", t.mortgageInterest], ["Outstanding principal on January 1, 2025 (box 2)", t.principalJan1], ["Real estate taxes paid from escrow (box 10)", t.propertyTax]] as [string, number][] },
+    { id: "interest", name: "Interest statement, 2025", acct: sav, lines: [["Interest paid", t.interest]] as [string, number][] },
+    { id: "mortgage", name: "Mortgage interest statement, 2025", acct: mort, lines: [["Mortgage interest received", t.mortgageInterest], ["Outstanding principal on January 1, 2025", t.principalJan1], ["Property tax paid from escrow", t.propertyTax]] as [string, number][] },
   ];
   return (
     <section className="wrap stlist" aria-labelledby="tax-title">
@@ -177,7 +177,7 @@ function Tax({ accts }: { accts: Account[] }) {
           {open === d.id && (
             <div className="taxdoc" id={`tax-${d.id}`}>
               <table className="sum"><tbody>{d.lines.map(([l, v]) => <tr key={l}><th scope="row">{l}</th><td className="num">{money(v)}</td></tr>)}</tbody></table>
-              <p className="note">Totals of the year's {d.id === "1099" ? "interest payments in this account's statements" : "mortgage statements: the interest part of each payment, and the property tax paid from escrow"}. A real form also carries both parties' tax identification numbers, which the study does not invent.</p>
+              <p className="note">Totals of the year's {d.id === "interest" ? "interest payments in this account's statements" : "mortgage statements: the interest part of each payment, and the property tax paid from escrow"}, in Dollaz.</p>
             </div>
           )}
         </li>

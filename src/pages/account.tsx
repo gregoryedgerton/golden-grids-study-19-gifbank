@@ -86,11 +86,11 @@ function CheckImage({ t, a }: { t: Line; a: Account }) {
   const words = dollars >= 1000 ? `${under1000(Math.floor(dollars / 1000))} Thousand${dollars % 1000 ? ` ${under1000(dollars % 1000)}` : ""}` : under1000(dollars);
   return (
     <figure className="checkimg" role="img" aria-label={`Check ${t.check}, dated ${dateLabel(t.date)}, paid to ${t.detail?.replace("Paid to ", "")}, ${money(amt)}.`}>
-      <div className="checkimg__top"><span>{CUSTOMER.first} {CUSTOMER.last}<br />{CUSTOMER.address.line1}</span><span>{t.check}</span></div>
+      <div className="checkimg__top"><span>{CUSTOMER.name}<br />{CUSTOMER.address.line1}</span><span>{t.check}</span></div>
       <div className="checkimg__date">Date <u>{dateLabel(t.date)}</u></div>
-      <div className="checkimg__pay">Pay to the order of <u>{t.detail?.replace("Paid to ", "")}</u><span className="checkimg__box">{money(amt).replace("$", "$ ")}</span></div>
-      <div className="checkimg__words"><u>{words} and {String(c).padStart(2, "0")}/100</u> Dollars</div>
-      <div className="checkimg__foot"><span className="checkimg__bank">GIFbank</span><span className="checkimg__sig">{CUSTOMER.first} {CUSTOMER.last}</span></div>
+      <div className="checkimg__pay">Pay to the order of <u>{t.detail?.replace("Paid to ", "")}</u><span className="checkimg__box">{money(amt).replace("Ƶ", "Ƶ ")}</span></div>
+      <div className="checkimg__words"><u>{words} and {String(c).padStart(2, "0")}/100</u> Dollaz</div>
+      <div className="checkimg__foot"><span className="checkimg__bank">GIFbank</span><span className="checkimg__sig">{CUSTOMER.name}</span></div>
       <div className="checkimg__micr">⑈{mask(a)}⑈ {t.check}</div>
     </figure>
   );
@@ -117,7 +117,7 @@ function Activity({ a, all }: { a: Account; all: Txn[] }) {
   const totOut = post.filter((t) => !moneyIn(t)).reduce((n, t) => n + Math.abs(t.amount), 0);
   const cols = loan ? ["Principal", "Interest", "Escrow"] : credit ? ["Charges", "Payments and credits"] : ["Withdrawals", "Deposits"];
   const csv = () => {
-    const rows = [["Date", "Description", "Detail", "Category", "Amount", "Balance"], ...post.map((t) => [t.date, t.desc, t.detail ?? "", t.category, (t.amount / 100).toFixed(2), t.balance !== undefined ? (t.balance / 100).toFixed(2) : ""])];
+    const rows = [["Date", "Description", "Detail", "Category", "Amount (Dollaz)", "Balance (Dollaz)"], ...post.map((t) => [t.date, t.desc, t.detail ?? "", t.category, (t.amount / 100).toFixed(2), t.balance !== undefined ? (t.balance / 100).toFixed(2) : ""])];
     const blob = new Blob([rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n")], { type: "text/csv" });
     const u = URL.createObjectURL(blob); const el = document.createElement("a"); el.href = u; el.download = `gifbank-${a.id}-${from}-to-${to}.csv`; el.click(); URL.revokeObjectURL(u);
   };
@@ -181,12 +181,12 @@ function Details({ a }: { a: Account }) {
       <summary>Account details</summary>
       <dl className="facts">
         <div><dt>Product</dt><dd>{a.product}</dd></div>
-        <div><dt>Nickname</dt><dd>{a.nickname} · <a href={`${PAGES.settings}?s=accounts`}>Change</a></dd></div>
+        <div><dt>Nickname</dt><dd>{a.nickname}</dd></div>
         <div><dt>Account number</dt><dd>{mask(a)}</dd></div>
         <div><dt>Opened</dt><dd>{dateLabel(a.opened)}</dd></div>
-        <div><dt>Owner</dt><dd>{CUSTOMER.first} {CUSTOMER.last}</dd></div>
+        <div><dt>Owner</dt><dd>{CUSTOMER.name}</dd></div>
         <div><dt>Statements</dt><dd>{s.delivery[a.id] === "online" ? "Online only" : "Online and paper"} · <a href={`${PAGES.statements}?a=${a.id}&tab=delivery`}>Change</a></dd></div>
-        {a.group === "deposit" && a.id === "checking" && <div><dt>Monthly fee</dt><dd>$0.00, waived with a $500 daily balance</dd></div>}
+        {a.group === "deposit" && a.id === "checking" && <div><dt>Monthly fee</dt><dd>{money(0)}, waived with a {money(50000)} daily balance</dd></div>}
         {a.limit && <div><dt>Credit line</dt><dd>{money(a.limit)} · Purchase APR {(a.rate! * 100).toFixed(2)}%</dd></div>}
         {a.loan && <div><dt>Loan</dt><dd>{money(a.loan.original)}, {a.loan.termMonths / 12} years, first payment {dateLabel(a.loan.firstPayment)}</dd></div>}
       </dl>

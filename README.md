@@ -9,8 +9,9 @@ personal banking home page and the signed-in Online Banking behind its log-in
 as stacked golden grids, for a fictional bank under a parody name, GIFbank,
 and a fictional customer. Where the reference has Log In, the header's corner
 says Enter: it opens a notice that GIFbank is a parody and not a real bank,
-then continues to a demo of the banking screens: the accounts, each account's activity, statements and tax documents, and Profile
-& Settings. Every number is computed from one set of invented transactions,
+then continues to a demo of the banking screens: the accounts, each account's
+activity, and statements and tax documents. The money is a fictional
+currency, Dollaz, written Ƶ. Every number is computed from one set of invented transactions,
 so the arithmetic holds on every page, and transfers the reader makes change
 every balance at once. None of the reference's sentences, photographs or marks
 is reproduced. Built with [Golden Grids](https://github.com/gregoryedgerton/golden-grids)
@@ -51,7 +52,7 @@ links in `#038203`, a pale green tint `#f6faf0` behind the corner control, grey 
 square corners and square buttons. The reference's face, TD Graphik, is
 proprietary; Figtree stands in. The reference has one scheme; the dark scheme
 is the study's own, the same greens turned over, and follows the device or the
-Display setting in Profile & Settings.
+device.
 
 ## Approach
 
@@ -71,13 +72,12 @@ study sets them as golden grids:
   largest square, from checking and the card.
 - **A statement opens to a grid of its summary**, the ending balance largest,
   above the statement itself.
-- **Profile & Settings** opens on its six sections as two grids of three.
 - **The home page** sets the hero (photograph, offer, Online Banking), the
   products, the ways to manage an account and the reasons to bank as grids.
 
 Flat modules stay flat: the headers and tabs, the parody notice, the quick actions,
 the transfer form, the activity table, the statement document, the lists of
-statements and documents, settings rows, the questions and the footer.
+statements and documents, the questions and the footer.
 
 | Page | Band | Cells |
 | --- | --- | --- |
@@ -89,7 +89,6 @@ statements and documents, settings rows, the questions and the footer.
 | | Spending this month | the five largest categories |
 | Account | Balances | five figures for the kind of account |
 | Statements | At a glance | five figures from the statement's summary |
-| Settings | Home | six sections in two bands of three |
 
 **What answers back.** Enter in the corner, and the Online Banking box, open
 the parody notice beneath the corner; Continue goes to the demo accounts, and
@@ -104,10 +103,8 @@ words, opens each row to its detail (a check opens to a drawing of the check),
 shows more, and downloads what it shows as CSV. Statements choose an account
 and a year, open a month in place, step to the previous or next, and print on
 their own. Tax documents open their figures. Delivery preferences switch each
-account to online only, with consent. Settings renames accounts (the name
-changes on every page), edits the address, email and mobile number, sets
-alerts and their thresholds, turns two-step verification on and off, sets the
-display and language, and resets everything the study keeps.
+account to online only, with consent. Reset the demo, in the name menu,
+clears everything the study keeps.
 
 ## Content and provenance
 
@@ -121,7 +118,7 @@ display and language, and resets everything the study keeps.
   tax refunds, a holiday month and a summer trip. Balances, running balances,
   statements, savings interest (accrued daily on the closing balance, paid
   monthly), the mortgage's split of each payment into principal, interest and
-  escrow (the standard fixed-rate formula on an invented loan of $340,000 at
+  escrow (the standard fixed-rate formula on an invented loan of Ƶ340,000 at
   6.125% for 30 years), escrow disbursements for property tax and insurance,
   the card's statement, minimum payment and cash back, the 2025 tax figures,
   spending by category and what is coming up are all computed from those
@@ -134,17 +131,24 @@ display and language, and resets everything the study keeps.
   deposit account is overdrawn and escrow never goes below zero; that both
   sides of every transfer agree; that each card autopay equals the statement
   balance it pays; and that each mortgage payment splits exactly. It passes.
-- **The customer and the bank are invented.** Jordan Ellery, an address on an
-  invented street, telephone numbers in the 555-01 range set aside for
-  fiction, an email at example.com. Account numbers are shown as Xs with four
-  digits that belong to no one. Merchants, the employer, utilities and payees
-  have invented names. GIFbank, N.A. is fictional; the footer says it is not
+- **The customer and the bank are invented.** Every account is in the name of
+  GIFcommit, at Greg's direction, with an address on an invented street and an
+  email at example.com. Account numbers are Xs ending in four letters in
+  sequence, ABCD, EFGH, IJKL and MNOP, so none can be mistaken for a real one.
+  Every merchant, biller, employer and payee on a statement is a GIF name
+  written as the study brands are, GIF and a lowercase tail with no space:
+  GIFmarket, GIFcoffee, GIFfuel, GIFelectric, GIFdesign (the employer). Some
+  are the other layout studies' brands: GIFflix and GIFify are the
+  subscriptions, GIFbnb the summer cottage, GIFdepot the hardware, GIFea the
+  gifts, GIFbell and GIFn'now dinners out, GIFmutual the home insurance and
+  GIF.gov the tax refund. The bank's own products follow the same form
+  (GIFcomplete Checking, GIFcash Credit Card, GIFpremier). GIFbank, N.A. is fictional; the footer says it is not
   a bank and not FDIC-insured.
 - **There is no sign-in.** No page has a user name or password field. Enter
   shows a notice that GIFbank is a parody for a layout study and not a real
   bank, and that real banking details should never be entered into a page
-  reached from a link, then continues to the demo. Email and mobile fields in
-  Profile & Settings accept only `.example` addresses and 555-01 numbers. Everything the
+  reached from a link, then continues to the demo. No page asks for
+  personal details. Everything the
   reader does is kept in this browser's local storage (`gg19b-*`) and sent
   nowhere. `?demo` on a signed-in page signs in, for captures.
 - **Photographs** are in [`src/photos.json`](src/photos.json), each with its
@@ -182,9 +186,17 @@ has been reviewed.
   pending; nothing settles over time, and there are no bank holidays in the
   books.
 - **Card interest is zero throughout**, because autopay pays each statement in
-  full; the statement shows the interest line at $0.00 and the minimum
+  full; the statement shows the interest line at Ƶ0.00 and the minimum
   payment warning anyway.
 - **Statements begin in January 2025** where the reference keeps seven years.
+- **The money is Dollaz (Ƶ), a fictional currency**, so no figure reads as
+  real money; the year-end documents are GIFbank's own statements rather than
+  any government's tax forms, and the tax refund comes from an unnamed
+  revenue office. Figtree has no Ƶ, so that one glyph is loaded from Inter.
+- **Profile & Settings was removed** (Greg, 2026-10-16: it did not do anything
+  "really golden griddy"). Its tab stays in the bar, for show; the name menu
+  keeps Reset the demo. Removing it also removed the study's only fields for
+  an address, an email and a phone number.
 - **Accessibility.** `captures/scan.cjs` reports no overflow, no fitted line
   under 12px and no axe violations in Chrome and WebKit at 390, 820 and 1440,
   light and dark, on every page and its variants (signed in and out).
@@ -203,7 +215,7 @@ top, and "About this layout study", the last element on the page.
 npm install
 npm run dev
 npm run check:ledger
-NODE_PATH=<a node_modules with playwright> node captures/scan.cjs http://localhost:5173/ index "accounts?demo" "account?a=card&demo" "statements?a=checking&m=2026-09&demo" "settings?demo"
+NODE_PATH=<a node_modules with playwright> node captures/scan.cjs http://localhost:5173/ index "accounts?demo" "account?a=card&demo" "statements?a=checking&m=2026-09&demo""
 ```
 
 Pushing to `main` deploys to GitHub Pages.

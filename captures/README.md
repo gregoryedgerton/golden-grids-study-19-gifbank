@@ -11,6 +11,6 @@ No screenshot of the reference is kept: its pages carry its own photographs and 
 
 ```bash
 npm run check:ledger
-NODE_PATH=<a node_modules with playwright> node captures/scan.cjs http://localhost:5197/ index accounts "accounts?demo" "account?a=checking&demo" "account?a=card&demo" "account?a=mortgage&demo" "statements?a=checking&m=2026-09&demo" "statements?tab=tax&demo" "settings?demo" "settings?s=personal&demo"
+NODE_PATH=<a node_modules with playwright> node captures/scan.cjs http://localhost:5197/ index accounts "accounts?demo" "account?a=checking&demo" "account?a=card&demo" "account?a=mortgage&demo" "statements?a=checking&m=2026-09&demo" "statements?tab=tax&demo"
 NODE_PATH=<a node_modules with playwright> node captures/cells.cjs http://localhost:5197/ 390 webkit index "accounts?demo"
 ```

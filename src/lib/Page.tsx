@@ -5,7 +5,7 @@ import { Credits } from "./modules";
 import { useFontsReady } from "./fonts";
 import { Icon, Mark } from "../icons";
 import { BANK_TABS, CUSTOMER, FOOTER, LEGAL, PAGES, PRODUCT_NAV, SEGMENTS } from "../content";
-import { logIn, logOut, session } from "./store";
+import { logIn, logOut, resetAll, session } from "./store";
 
 /**
  * GIFbank's two shells, after the reference's. The public site has three
@@ -108,7 +108,7 @@ function PublicHeader() {
           <CornerEnter />
         </div>
       </div>
-      <nav className="pub__nav" aria-label="Products"><div className="wrap"><ul>{PRODUCT_NAV.map((p) => <li key={p}><span>{p}{p !== "GIF Premier" && <Icon name="chevron" size={14} />}</span></li>)}</ul></div></nav>
+      <nav className="pub__nav" aria-label="Products"><div className="wrap"><ul>{PRODUCT_NAV.map((p) => <li key={p}><span>{p}{p !== "GIFpremier" && <Icon name="chevron" size={14} />}</span></li>)}</ul></div></nav>
     </header>
   );
 }
@@ -129,9 +129,8 @@ function BankHeader({ current }: { current: string }) {
             <button ref={btn} type="button" className="util util--label usermenu__btn" aria-expanded={menu} aria-controls="user-menu" onClick={() => setMenu(!menu)}><Icon name="user" size={20} /><span className="util__text">{CUSTOMER.first}</span><Icon name="chevron" size={14} /></button>
             {menu && (
               <ul className="usermenu__list" id="user-menu">
-                <li><a href={PAGES.settings}>Profile &amp; Settings</a></li>
                 <li><a href={PAGES.statements}>Statements &amp; Documents</a></li>
-                <li><a href={`${PAGES.settings}?s=security`}>Security</a></li>
+                <li><button type="button" onClick={() => { resetAll(); location.assign(PAGES.home); }}>Reset the demo</button></li>
                 <li><button type="button" onClick={out}>Log Out</button></li>
               </ul>
             )}
