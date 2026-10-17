@@ -120,14 +120,6 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; accent-
 .corner__panel { position: absolute; right: 0; top: 100%; width: min(380px, calc(100vw - 2 * var(--pad))); padding: 24px; background: var(--card); border-top: 4px solid var(--green); box-shadow: var(--shadow); z-index: 30; }
 @media (max-width: 639px) { .corner__btn { min-height: 56px; padding: 0 14px; } .pub__row { min-height: 56px; } .mark__tile { width: 38px; height: 38px; font-size: 15px; } .mark__name { font-size: 19px; } }
 
-.login { display: grid; gap: 8px; }
-.login__title { font: 600 22px/1.25 var(--font); color: var(--head); margin-bottom: 6px; }
-.login__label { font-weight: 600; font-size: 14px; }
-.login__field { font-weight: 600; letter-spacing: 0.02em; }
-.login__note { display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; background: var(--tint); font-size: 14px; color: var(--fg); }
-.login__note .icon { margin-top: 2px; color: var(--link); }
-.login__remember { display: flex; align-items: center; gap: 10px; min-height: 36px; cursor: pointer; }
-.login__links { display: grid; gap: 6px; margin-top: 6px; font-size: 14px; color: var(--link); font-weight: 600; }
 
 /* --- The signed-in header and tabs ---------------------------------------------------------- */
 .bank { background: var(--card); position: relative; z-index: 20; }
@@ -157,14 +149,12 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; accent-
 .intro { text-align: center; padding: 40px 0 6px; }
 .intro__title { font: 600 clamp(22px, 2.6vw, 30px)/1.2 var(--font); color: var(--head); }
 .intro__sub { margin-top: 14px; font: 600 20px/1.3 var(--font); color: var(--head); }
-.gate { display: grid; gap: 16px; padding: 40px 0; max-width: 460px; }
-.gate__note { display: flex; gap: 8px; align-items: center; }
-.gate__form { padding: 24px; border: 1px solid var(--line); border-top: 4px solid var(--green); background: var(--card); }
-.gate__acts { display: flex; }
+.gate { display: grid; gap: 12px; padding: 40px 0; max-width: 600px; }
 
-/* --- Parody notice: shown on Enter, in place of the removed demo sign-in ------------------- */
-.parody { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: var(--pad); background: rgba(16, 24, 20, 0.55); }
-.parody__box { width: min(520px, 100%); background: var(--card); border-top: 4px solid var(--green); box-shadow: var(--shadow); padding: 28px; display: grid; gap: 14px; }
+/* --- Parody notice: under Enter in the header corner, and in place of a signed-out page --- */
+.parody__box { display: grid; gap: 14px; }
+.gate .parody__box { padding: 24px; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--green); }
+.gate__kicker { font-weight: 600; color: var(--fg-2); }
 .parody__title { display: flex; gap: 10px; align-items: center; font: 600 22px/1.2 var(--font); color: var(--head); }
 .parody__title .icon { color: var(--link); flex: none; }
 .parody__body { display: grid; gap: 10px; font-size: 15px; color: var(--fg); }

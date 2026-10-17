@@ -34,7 +34,7 @@ export const CUSTOMER = {
   lastLogin: "Oct 15, 2026 at 8:42 PM",
 };
 
-/** The public site's three bars: the line of segments, the utilities with the corner log-in, and the products. */
+/** The public site's three bars: the line of segments, the utilities with Enter in the corner, and the products. */
 export const SEGMENTS = ["Personal", "Small Business", "Commercial", "Investing & Wealth", "About Us"];
 export const PRODUCT_NAV = ["Checking & Savings", "Credit Cards", "Lending", "Learning", "GIF Premier"];
 

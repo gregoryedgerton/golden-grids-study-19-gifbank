@@ -7,9 +7,9 @@ GIFcommit00020
 An unaffiliated layout study. It rebuilds [TD Bank's](https://www.td.com/us/en/personal-banking)
 personal banking home page and the signed-in Online Banking behind its log-in
 as stacked golden grids, for a fictional bank under a parody name, GIFbank,
-and a fictional customer. The log-in sits in the header's corner, filled in
-for the reader; it signs in to a demo of five screens' worth of banking: the
-accounts, each account's activity, statements and tax documents, and Profile
+and a fictional customer. Where the reference has Log In, the header's corner
+says Enter: it opens a notice that GIFbank is a parody and not a real bank,
+then continues to a demo of the banking screens: the accounts, each account's activity, statements and tax documents, and Profile
 & Settings. Every number is computed from one set of invented transactions,
 so the arithmetic holds on every page, and transfers the reader makes change
 every balance at once. None of the reference's sentences, photographs or marks
@@ -28,7 +28,8 @@ from the [study template](https://github.com/gregoryedgerton/golden-grids-study-
   we help you find?" as a row of circled icons; ways to manage an account;
   reasons to bank; questions; and the footer's link groups.
 - **The Online Banking sign-in**: user name, password, Remember me, Log in,
-  and the links for a forgotten password and signing up.
+  and the links for a forgotten password and signing up. The study does not
+  rebuild it (see Notes for review).
 - **The signed-in pages were not seen.** The study does not sign in to
   anyone's account. They are built from the reference's own descriptions of
   [Online Banking](https://www.td.com/us/en/personal-banking/online-banking),
@@ -46,7 +47,7 @@ marks.
 
 **Register:** white ground, the bright green `#008a00` of the segments bar,
 the signed-in tabs and the buttons, the dark green `#1a5336` of headings,
-links in `#038203`, a pale green tint `#f6faf0` behind the log-in, grey rules,
+links in `#038203`, a pale green tint `#f6faf0` behind the corner control, grey rules,
 square corners and square buttons. The reference's face, TD Graphik, is
 proprietary; Figtree stands in. The reference has one scheme; the dark scheme
 is the study's own, the same greens turned over, and follows the device or the
@@ -74,7 +75,7 @@ study sets them as golden grids:
 - **The home page** sets the hero (photograph, offer, Online Banking), the
   products, the ways to manage an account and the reasons to bank as grids.
 
-Flat modules stay flat: the headers and tabs, the log-in, the quick actions,
+Flat modules stay flat: the headers and tabs, the parody notice, the quick actions,
 the transfer form, the activity table, the statement document, the lists of
 statements and documents, settings rows, the questions and the footer.
 
@@ -90,10 +91,10 @@ statements and documents, settings rows, the questions and the footer.
 | Statements | At a glance | five figures from the statement's summary |
 | Settings | Home | six sections in two bands of three |
 
-**What answers back.** The corner log-in and the Online Banking box open the
-same filled-in form; Log In signs in, Remember me is kept, and Log Out (in the
-header and the name menu) signs out. A signed-in page reached while signed out
-shows the log-in in its place. Hide balances turns every figure to dots. Make a
+**What answers back.** Enter in the corner, and the Online Banking box, open
+the parody notice beneath the corner; Continue goes to the demo accounts, and
+Log Out (in the header and the name menu) leaves them. A signed-in page reached
+while signed out shows the notice in its place. Hide balances turns every figure to dots. Make a
 Transfer runs in three steps (details, review, confirmation with a number),
 checks the amount against what is available or owed, moves money between
 checking and savings, pays the card or adds principal to the mortgage, posts
@@ -139,11 +140,11 @@ display and language, and resets everything the study keeps.
   digits that belong to no one. Merchants, the employer, utilities and payees
   have invented names. GIFbank, N.A. is fictional; the footer says it is not
   a bank and not FDIC-insured.
-- **The sign-in is a demo.** The user name and password are filled in and
-  read-only, the password is dots in an ordinary text field (so no browser
-  offers to save it), there is no other way in, and the form says never to
-  type real bank details into a page reached from a link. Email and mobile
-  fields accept only `.example` addresses and 555-01 numbers. Everything the
+- **There is no sign-in.** No page has a user name or password field. Enter
+  shows a notice that GIFbank is a parody for a layout study and not a real
+  bank, and that real banking details should never be entered into a page
+  reached from a link, then continues to the demo. Email and mobile fields in
+  Profile & Settings accept only `.example` addresses and 555-01 numbers. Everything the
   reader does is kept in this browser's local storage (`gg19b-*`) and sent
   nowhere. `?demo` on a signed-in page signs in, for captures.
 - **Photographs** are in [`src/photos.json`](src/photos.json), each with its
@@ -159,6 +160,13 @@ Observations for whoever reviews this study, recorded without a verdict.
 Whether the layout suits the page is assessed separately, after every study
 has been reviewed.
 
+- **The sign-in was removed after Google flagged the study.** The first
+  version rebuilt the corner log-in with a user name and password filled in
+  and read-only, and cited the reference's real sign-in page. Google Safe
+  Browsing flagged the study as a deceptive site; a bank-styled page with
+  credential fields reads as phishing however it is labelled. On 2026-10-16
+  the form and the link were removed; Enter and the parody notice stand in
+  their place. Nothing was ever collected.
 - **The signed-in pages were not seen.** Their arrangement is inferred from
   the reference's public descriptions and from how online banking commonly
   works; details such as the order of the tabs and the columns of the activity

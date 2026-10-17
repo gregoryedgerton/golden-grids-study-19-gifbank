@@ -10,10 +10,10 @@
     "statements": "Statements & Documents",
     "settings": "Profile & Settings"
   },
-  "summary": "TD Bank's personal banking home page and the signed-in Online Banking behind its log-in, rebuilt as stacked golden grids for a fictional bank and a fictional customer. The log-in in the header's corner is filled in for the reader and signs in to a demo: an accounts page, each account's activity, twenty-one months of statements and tax documents, and Profile & Settings. Every balance, statement and running total is computed from one set of invented transactions, so the arithmetic holds everywhere, and transfers the reader makes change every page.",
+  "summary": "TD Bank's personal banking home page and the signed-in Online Banking behind its log-in, rebuilt as stacked golden grids for a fictional bank and a fictional customer. Where the reference has Log In, the header's corner says Enter: a notice that GIFbank is a parody, then a demo: an accounts page, each account's activity, twenty-one months of statements and tax documents, and Profile & Settings. Every balance, statement and running total is computed from one set of invented transactions, so the arithmetic holds everywhere, and transfers the reader makes change every page.",
   "reviewed": {
     "date": "October 16, 2026",
-    "method": "The public home page and the Online Banking sign-in page were read and captured at 390, 820 and 1440 pixels for structure, colour and type; the captures are not kept, as they carry the reference's photographs and marks. The signed-in pages were not seen: the study does not sign in to anyone's account. They are built from the reference's own descriptions of Online Banking and My TD (the accounts view, available balance and pending transactions, statements kept seven years and paperless delivery, alerts, masked account numbers, single-use security codes) and from how such pages are commonly arranged. No text or image of the reference is kept in the repository or published.",
+    "method": "The public home page and the reference's Online Banking sign-in page were read and captured at 390, 820 and 1440 pixels for structure, colour and type; the captures are not kept, as they carry the reference's photographs and marks. The signed-in pages were not seen: the study does not sign in to anyone's account. They are built from the reference's own descriptions of Online Banking and My TD (the accounts view, available balance and pending transactions, statements kept seven years and paperless delivery, alerts, masked account numbers, single-use security codes) and from how such pages are commonly arranged. No text or image of the reference is kept in the repository or published.",
     "pages": [
       {
         "label": "Personal banking home page",
@@ -34,7 +34,7 @@
     ]
   },
   "real": [
-    "The structure of the public home page: the line of segments, the header with the corner log-in, the product navigation, the hero with an Online Banking box, the row of products, the reasons to bank and the questions, and the footer's groups of links.",
+    "The structure of the public home page: the line of segments, the header with Log In in its corner (here Enter, which opens a parody notice: the study has no sign-in), the product navigation, the hero with an Online Banking box, the row of products, the reasons to bank and the questions, and the footer's groups of links.",
     "The features the reference describes for Online Banking: all accounts on one page, an available balance that drops at once for a card purchase while the purchase shows as pending, statements online for seven years with paper statements that can be turned off, alerts for balances and deposits, masked account numbers and single-use security codes.",
     "The arithmetic. Every balance, running balance, statement total, interest payment, mortgage split and card statement is computed from the transactions, and a check in the repository confirms that each statement's beginning balance plus its activity equals its ending balance, that each ending balance is the next beginning, and that both sides of every transfer agree."
   ],
