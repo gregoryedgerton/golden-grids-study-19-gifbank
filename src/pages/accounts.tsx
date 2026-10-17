@@ -2,7 +2,7 @@ import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BankPage } from "../lib/Page";
 import { GridBand, type Cell } from "../bands/bands";
-import { AccountSquare, Figure, HideToggle, Money, TransferPanel, plain } from "../lib/bank";
+import { AccountSquare, Figure, HideToggle, Money, TransfersPanel, plain } from "../lib/bank";
 import { Icon } from "../icons";
 import { CUSTOMER, REFERENCE, accountHref, statementHref } from "../content";
 import { STATEMENT_MONTHS, TODAY, dateLabel, mask, monthLabel, shortDate, spending, upcoming } from "../bank/ledger";
@@ -12,9 +12,10 @@ import "../styles.css";
 /**
  * Account Home. The reference's accounts view lists every account on one
  * page with its balance; here they are one grid, checking in the largest
- * square. Under it: the quick actions, the transfer form opening in place,
- * this month's spending as a grid by category, what is scheduled next and
- * the latest activity across the accounts.
+ * square. Under it: the quick actions, the transfers between the accounts
+ * opening in place (a list, not a form: the study moves no money), this
+ * month's spending as a grid by category, what is scheduled next and the
+ * latest activity across the accounts.
  */
 function greeting() {
   const h = new Date().getHours();
@@ -83,18 +84,17 @@ function App() {
     <BankPage current="accounts" title="Accounts" source={[REFERENCE.myTd, REFERENCE.onlineBanking]}>
       <div className="wrap greet">
         <h1 className="greet__title">{greeting()}, {CUSTOMER.first}</h1>
-        <p className="note">Last log in: {CUSTOMER.lastLogin}</p>
       </div>
       <p className="wrap notice"><Icon name="doc" size={20} /><span>Your {monthLabel(last)} statements are ready. <a href={statementHref("checking", last)}>View statements</a></span></p>
       <Accounts />
       <div className="wrap actions">
-        <button type="button" className={`action${open ? " is-on" : ""}`} aria-expanded={open} aria-controls="transfer" onClick={() => setOpen(!open)}><Icon name="transfer" size={26} />Make a Transfer</button>
+        <button type="button" className={`action${open ? " is-on" : ""}`} aria-expanded={open} aria-controls="transfer" onClick={() => setOpen(!open)}><Icon name="transfer" size={26} />Transfers</button>
         <span className="action action--show"><Icon name="bill" size={26} />Pay Bills</span>
         <span className="action action--show"><Icon name="send" size={26} />Send Money</span>
         <span className="action action--show"><Icon name="phone" size={26} />Mobile Deposit</span>
         <span className="action action--show"><Icon name="chat" size={26} />Secure Messages</span>
       </div>
-      {open && <div className="wrap"><TransferPanel initialTo={(["savings", "card", "mortgage", "checking"] as const).find((x) => x === new URLSearchParams(location.search).get("to")) ?? "savings"} /></div>}
+      {open && <div className="wrap"><TransfersPanel /></div>}
       <Spending />
       <div className="wrap twocol"><Upcoming /><Recent /></div>
     </BankPage>

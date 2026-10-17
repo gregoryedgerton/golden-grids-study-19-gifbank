@@ -4,7 +4,7 @@ import { BankPage } from "../lib/Page";
 import { GridBand, type Cell } from "../bands/bands";
 import { Figure, plain } from "../lib/bank";
 import { Icon, Mark } from "../icons";
-import { CUSTOMER, REFERENCE, accountHref } from "../content";
+import { CUSTOMER, DELIVERY, REFERENCE, accountHref, deliveryLabel } from "../content";
 import { STATEMENT_MONTHS, addDays, dateLabel, mask, money, monthLabel, shortDate, statement, taxYear, type Account, type AccountId, type Statement } from "../bank/ledger";
 import { settings, useAccounts, useBooks } from "../lib/store";
 import "../styles.css";
@@ -43,7 +43,6 @@ function Sum({ rows }: { rows: [string, number, ("+" | "−" | "=")?][] }) {
 }
 
 function Document({ s, a, onPrev, onNext }: { s: Statement; a: Account; onPrev?: () => void; onNext?: () => void }) {
-  const set = settings.use();
   const credit = a.group === "credit", loan = a.group === "loan";
   const daily = (() => { const m = new Map<string, number>(); for (const t of s.lines) m.set(t.date, t.balance!); return [...m]; })();
   return (
@@ -58,7 +57,7 @@ function Document({ s, a, onPrev, onNext }: { s: Statement; a: Account; onPrev?:
         <div><h2 id="st-title" className="statement__title">{credit ? "Credit card statement" : loan ? "Mortgage statement" : "Statement of account"}</h2><p>{a.product}</p></div>
       </header>
       <div className="statement__parties">
-        <address>{CUSTOMER.name}<br />{set.address.line1}<br />{set.address.city}, {set.address.state} {set.address.zip}</address>
+        <address>{CUSTOMER.name}<br />{CUSTOMER.address.line1}<br />{CUSTOMER.address.city}, {CUSTOMER.address.state} {CUSTOMER.address.zip}</address>
         <dl className="facts facts--tight">
           <div><dt>Account</dt><dd>{mask(a)}</dd></div>
           <div><dt>Statement period</dt><dd>{dateLabel(s.start)} – {dateLabel(s.end)}</dd></div>
@@ -92,7 +91,7 @@ function Document({ s, a, onPrev, onNext }: { s: Statement; a: Account; onPrev?:
                   <tr className="act__row">
                     <td>{shortDate(t.date)}</td>
                     <td><strong>{t.desc}</strong>{t.detail && <span className="act__detail">{t.detail}</span>}</td>
-                    {loan ? <><td className="num">{t.split ? money(t.split.principal) : t.own ? money(-t.amount) : ""}</td><td className="num">{t.split ? money(t.split.interest) : ""}</td><td className="num">{t.split ? money(t.split.escrow) : t.escrow ? `−${money(-t.escrow)}` : ""}</td></>
+                    {loan ? <><td className="num">{t.split ? money(t.split.principal) : ""}</td><td className="num">{t.split ? money(t.split.interest) : ""}</td><td className="num">{t.split ? money(t.split.escrow) : t.escrow ? `−${money(-t.escrow)}` : ""}</td></>
                       : <td className="num">{t.amount < 0 ? `−${money(-t.amount)}` : money(t.amount)}</td>}
                     <td className="num">{money(t.balance!)}</td>
                   </tr>
@@ -135,7 +134,7 @@ function Statements({ accts }: { accts: Account[] }) {
       <div className="wrap stpick">
         <div className="field"><label htmlFor="st-acct">Account</label><select id="st-acct" value={acct} onChange={(e) => { setAcct(e.target.value as AccountId); setMonth(null); }}>{accts.map((x) => <option key={x.id} value={x.id}>{x.nickname} {mask(x)}</option>)}</select></div>
         <div className="field"><label htmlFor="st-year">Year</label><select id="st-year" value={year} onChange={(e) => setYear(e.target.value)}>{[...new Set(months.map((m) => m.slice(0, 4)))].map((y) => <option key={y}>{y}</option>)}</select></div>
-        <p className="note stpick__note">Delivered {set.delivery[acct] === "online" ? "online only" : "online and by mail"}. Statements are kept online for seven years; these accounts' online statements begin in January 2025.</p>
+        <p className="note stpick__note">Delivered {DELIVERY[acct] === "online" ? "online only" : "online and by mail"}. Statements are kept online for seven years; these accounts' online statements begin in January 2025.</p>
       </div>
       <section className="wrap stlist" aria-labelledby="stl-title">
         <h2 id="stl-title" className="visually-hidden">{a.nickname} statements, {year}</h2>
@@ -186,28 +185,26 @@ function Tax({ accts }: { accts: Account[] }) {
   );
 }
 
+/**
+ * Each account's statement delivery, shown as it stands. The reference lets
+ * a customer switch to online only and asks for consent to electronic
+ * documents; the study shows the preference and changes nothing, since a
+ * bank-styled consent form reads as phishing (CLAUDE.md, Safe Browsing
+ * remediation).
+ */
 function Delivery({ accts }: { accts: Account[] }) {
-  const set = settings.use();
-  const [draft, setDraft] = useState(set.delivery);
-  const [agree, setAgree] = useState(false);
-  const [said, setSaid] = useState("");
-  const toOnline = accts.some((a) => draft[a.id] === "online" && set.delivery[a.id] !== "online");
-  const changed = accts.some((a) => draft[a.id] !== set.delivery[a.id]);
   return (
-    <form className="wrap panel delivery" onSubmit={(e) => { e.preventDefault(); if (toOnline && !agree) { setSaid("To switch to online only, agree to receive your documents electronically."); return; } settings.set((v) => ({ ...v, delivery: draft })); setAgree(false); setSaid("Delivery preferences saved to this browser."); }}>
-      <h2 className="panel__title">Delivery preferences</h2>
-      <p className="note">Online statements arrive sooner, and we'll email {set.email} when each is ready. Paper statements also come by mail.</p>
-      {accts.map((a) => (
-        <fieldset key={a.id} className="delivery__row">
-          <legend><strong>{a.nickname}</strong> <span className="note">{mask(a)}</span></legend>
-          <label><input type="radio" name={`d-${a.id}`} checked={draft[a.id] === "online"} onChange={() => setDraft({ ...draft, [a.id]: "online" })} />Online only</label>
-          <label><input type="radio" name={`d-${a.id}`} checked={draft[a.id] === "paper"} onChange={() => setDraft({ ...draft, [a.id]: "paper" })} />Online and paper</label>
-        </fieldset>
-      ))}
-      {toOnline && <label className="consent"><input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />I agree to receive statements, notices and other documents for these accounts electronically, and I can view and save PDF files.</label>}
-      <p className="row"><button type="submit" className="btn btn--green" disabled={!changed}>Save changes</button><button type="button" className="btn btn--outline" disabled={!changed} onClick={() => { setDraft(set.delivery); setAgree(false); setSaid(""); }}>Cancel</button></p>
-      <p className="note" role="status">{said}</p>
-    </form>
+    <section className="wrap panel delivery" aria-labelledby="dl-title">
+      <h2 id="dl-title" className="panel__title">Delivery preferences</h2>
+      <p className="note">How each account's statements and notices arrive. Online statements appear under Statements when each statement period closes; paper statements also come by mail to the address on the account. The demo shows each account's delivery and does not change it.</p>
+      <ul className="rows">{accts.map((a) => (
+        <li key={a.id}>
+          <span className="rows__icon"><Icon name={DELIVERY[a.id] === "online" ? "doc" : "mail"} size={22} /></span>
+          <span className="rows__what"><strong>{a.nickname}</strong><span className="note">{a.product} · {mask(a)}</span></span>
+          <span className="rows__amt">{deliveryLabel(a.id)}</span>
+        </li>
+      ))}</ul>
+    </section>
   );
 }
 
@@ -216,7 +213,7 @@ function App() {
   const [tab, setTab] = useState<Tab>((TABS.find(([id]) => id === q.get("tab"))?.[0]) ?? "statements");
   return (
     <BankPage current="statements" title="Statements & Documents" source={[REFERENCE.statements, REFERENCE.onlineBanking]}>
-      <div className="wrap greet"><h1 className="greet__title">Statements &amp; Documents</h1><p className="note">View, print and save your statements and tax documents, and choose how they're delivered. <a href={accountHref("checking")}>Back to activity</a></p></div>
+      <div className="wrap greet"><h1 className="greet__title">Statements &amp; Documents</h1><p className="note">View, print and save your statements and tax documents, and see how they are delivered. <a href={accountHref("checking")}>Back to activity</a></p></div>
       <div className="wrap seg" role="tablist" aria-label="Statements and documents">
         {TABS.map(([id, label]) => <button key={id} type="button" role="tab" id={`tab-${id}`} aria-selected={tab === id} aria-controls={`panel-${id}`} tabIndex={tab === id ? 0 : -1} onClick={() => setTab(id)} onKeyDown={(e) => { const i = TABS.findIndex(([x]) => x === tab); const n = e.key === "ArrowRight" ? (i + 1) % TABS.length : e.key === "ArrowLeft" ? (i + TABS.length - 1) % TABS.length : -1; if (n >= 0) { setTab(TABS[n][0]); document.getElementById(`tab-${TABS[n][0]}`)?.focus(); } }}>{label}</button>)}
       </div>

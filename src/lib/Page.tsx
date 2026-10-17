@@ -5,13 +5,13 @@ import { Credits } from "./modules";
 import { useFontsReady } from "./fonts";
 import { Icon, Mark } from "../icons";
 import { BANK_TABS, CUSTOMER, FOOTER, LEGAL, PAGES, PRODUCT_NAV, SEGMENTS } from "../content";
-import { logIn, logOut, resetAll, session } from "./store";
+import { enterDemo, exitDemo, resetAll, session } from "./store";
 
 /**
  * GIFbank's two shells, after the reference's. The public site has three
  * bars: the line of segments, the header with the mark, the utilities and
- * Enter in the corner, and the products. Signed in, the header carries the
- * customer and Log Out, and a green bar of tabs runs under it. Nav items are
+ * Enter in the corner, and the products. In the demo, the header carries the
+ * customer and Exit, and a green bar of tabs runs under it. Nav items are
  * the reference's, for show; only those that lead to the study's own pages
  * are links. Nothing in either shell leaves for the reference: it is linked
  * only from the notice and the disclosure.
@@ -33,9 +33,16 @@ import { logIn, logOut, resetAll, session } from "./store";
  * into the demo accounts (where the old Log In button went). The real-bank
  * sign-in link was dropped from the home page's sources (see content.ts).
  *
+ * A further round (2026-10-17) removed the rest of what reads as a bank
+ * phishing page: the Make a Transfer form (now a read-only list of transfers
+ * between the accounts), "Last log in", the paperless consent form (now a
+ * read-only list of each account's delivery), the footer's "Download the app"
+ * and "Report fraud", and "Log Out", which is now Exit.
+ *
  * Do NOT reintroduce username/password inputs, a sign-in form, or a link to any
- * real bank's sign-in anywhere in this study. See CLAUDE.md › "Safe Browsing
- * remediation".
+ * real bank's sign-in anywhere in this study, nor a form that moves money, a
+ * consent box, an email or phone field, or a "log in" line. See CLAUDE.md ›
+ * "Safe Browsing remediation".
  */
 
 /** Opens the parody notice in the header's corner: the only way into the demo session. */
@@ -51,7 +58,7 @@ export const openEnter = () => { window.dispatchEvent(new Event("gifbank:enter")
 function ParodyNotice({ onBack, autoFocus, level = 2 }: { onBack?: () => void; autoFocus?: boolean; level?: 1 | 2 }) {
   const go = useRef<HTMLButtonElement>(null);
   useEffect(() => { if (autoFocus) go.current?.focus(); }, [autoFocus]);
-  const enter = () => { logIn(false); location.assign(PAGES.accounts); };
+  const enter = () => { enterDemo(); location.assign(PAGES.accounts); };
   const H = level === 1 ? "h1" : "h2";
   return (
     <section className="parody__box" aria-labelledby="parody-t">
@@ -117,7 +124,7 @@ function BankHeader({ current }: { current: string }) {
   const [menu, setMenu] = useState(false);
   const btn = useRef<HTMLButtonElement>(null);
   useEffect(() => { if (!menu) return; const k = (e: KeyboardEvent) => { if (e.key === "Escape") { setMenu(false); btn.current?.focus(); } }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, [menu]);
-  const out = () => { logOut(); location.assign(PAGES.home); };
+  const out = () => { exitDemo(); location.assign(PAGES.home); };
   return (
     <header className="bank">
       <div className="wrap bank__row">
@@ -131,11 +138,11 @@ function BankHeader({ current }: { current: string }) {
               <ul className="usermenu__list" id="user-menu">
                 <li><a href={PAGES.statements}>Statements &amp; Documents</a></li>
                 <li><button type="button" onClick={() => { resetAll(); location.assign(PAGES.home); }}>Reset the demo</button></li>
-                <li><button type="button" onClick={out}>Log Out</button></li>
+                <li><button type="button" onClick={out}>Exit the demo</button></li>
               </ul>
             )}
           </div>
-          <button type="button" className="btn btn--outline btn--small bank__out" onClick={out}><Icon name="logout" size={16} />Log Out</button>
+          <button type="button" className="btn btn--outline btn--small bank__out" onClick={out}><Icon name="exit" size={16} />Exit</button>
         </div>
       </div>
       <nav className="tabs" aria-label="Demo banking">
@@ -191,7 +198,7 @@ export function PublicPage({ source, children }: { source: { label: string }[]; 
   );
 }
 
-/** A signed-in page. Signed out, it shows the sign-in where the page would be. */
+/** A page of the demo. Outside the demo, it shows the parody notice where the page would be. */
 export function BankPage({ current, title, source, children }: { current: string; title: string; source: { label: string }[]; children: ReactNode }) {
   useFontsReady(["400 1em Figtree", "600 1em Figtree"]);
   const s = session.use();

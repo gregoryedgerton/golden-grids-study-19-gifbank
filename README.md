@@ -12,8 +12,8 @@ says Enter: it opens a notice that GIFbank is a parody and not a real bank,
 then continues to a demo of the banking screens: the accounts, each account's
 activity, and statements and tax documents. The money is a fictional
 currency, Dollaz, written Ƶ. Every number is computed from one set of invented transactions,
-so the arithmetic holds on every page, and transfers the reader makes change
-every balance at once. None of the reference's sentences, photographs or marks
+so the arithmetic holds on every page. The demo shows transfers between the
+accounts but has no form that moves money. None of the reference's sentences, photographs or marks
 is reproduced. Built with [Golden Grids](https://github.com/gregoryedgerton/golden-grids)
 from the [study template](https://github.com/gregoryedgerton/golden-grids-study-template).
 
@@ -76,8 +76,8 @@ study sets them as golden grids:
   products, the ways to manage an account and the reasons to bank as grids.
 
 Flat modules stay flat: the headers and tabs, the parody notice, the quick actions,
-the transfer form, the activity table, the statement document, the lists of
-statements and documents, the questions and the footer.
+the list of transfers, the activity table, the statement document, the lists of
+statements, documents and delivery preferences, the questions and the footer.
 
 | Page | Band | Cells |
 | --- | --- | --- |
@@ -92,18 +92,18 @@ statements and documents, the questions and the footer.
 
 **What answers back.** Enter in the corner, and the Demo accounts box (the reference's Online Banking box), open
 the parody notice beneath the corner; Continue goes to the demo accounts, and
-Log Out (in the header and the name menu) leaves them. A signed-in page reached
-while signed out shows the notice in its place. Hide balances turns every figure to dots. Make a
-Transfer runs in three steps (details, review, confirmation with a number),
-checks the amount against what is available or owed, moves money between
-checking and savings, pays the card or adds principal to the mortgage, posts
-today, and can be cancelled. The activity table filters by period (since the
+Exit (in the header, and Exit the demo in the name menu) leaves them. A demo page reached
+from outside the demo shows the notice in its place. Hide balances turns every figure to dots.
+Transfers (the quick action, the tab, and the button on an account) opens a
+read-only list beneath the quick actions: the transfers between the accounts
+scheduled for the next three weeks and the six most recent, from the books.
+It moves no money. The activity table filters by period (since the
 last statement, 30 or 90 days, the year, any statement month), by type and by
 words, opens each row to its detail (a check opens to a drawing of the check),
 shows more, and downloads what it shows as CSV. Statements choose an account
 and a year, open a month in place, step to the previous or next, and print on
-their own. Tax documents open their figures. Delivery preferences switch each
-account to online only, with consent. Reset the demo, in the name menu,
+their own. Tax documents open their figures. Delivery preferences lists how
+each account's statements arrive, read-only. Reset the demo, in the name menu,
 clears everything the study keeps.
 
 ## Content and provenance
@@ -124,7 +124,7 @@ clears everything the study keeps.
   spending by category and what is coming up are all computed from those
   transactions. Nothing is typed in as a total.
 - **The check.** [`captures/ledger-check.mjs`](captures/ledger-check.mjs)
-  (`npm run check:ledger`, `--own` to add reader transfers) confirms that
+  (`npm run check:ledger`) confirms that
   every running balance follows from the one before; that each statement's
   beginning balance plus its activity is its ending balance, that its summary
   rows add up and that each ending balance is the next beginning; that no
@@ -132,8 +132,8 @@ clears everything the study keeps.
   sides of every transfer agree; that each card autopay equals the statement
   balance it pays; and that each mortgage payment splits exactly. It passes.
 - **The customer and the bank are invented.** Every account is in the name of
-  GIFcommit, at Greg's direction, with an address on an invented street and an
-  email at example.com. Account numbers are Xs ending in four letters in
+  GIFcommit, at Greg's direction, with an address on an invented street and no
+  email address or telephone number. Account numbers are Xs ending in four letters in
   sequence, ABCD, EFGH, IJKL and MNOP, so none can be mistaken for a real one.
   Every merchant, biller, employer and payee on a statement is a GIF name
   written as the study brands are, GIF and a lowercase tail with no space:
@@ -148,9 +148,9 @@ clears everything the study keeps.
   shows a notice that GIFbank is a parody for a layout study and not a real
   bank, and that real banking details should never be entered into a page
   reached from a link, then continues to the demo. No page asks for
-  personal details. Everything the
+  personal details or consent, and no form moves money. Everything the
   reader does is kept in this browser's local storage (`gg19b-*`) and sent
-  nowhere. `?demo` on a signed-in page signs in, for captures.
+  nowhere. `?demo` on a demo page enters the demo, for captures.
 - **Photographs** are in [`src/photos.json`](src/photos.json), each with its
   author, licence, page and alt text, from Wikimedia Commons under CC BY 2.0,
   CC BY-SA 4.0 or CC0; none shows a person or a bank. A photograph of a laptop
@@ -164,6 +164,23 @@ Observations for whoever reviews this study, recorded without a verdict.
 Whether the layout suits the page is assessed separately, after every study
 has been reviewed.
 
+- **The rest of the bank-page signals were removed (2026-10-17).** With the
+  whole github.io origin flagged, everything that could read as collecting
+  details, signing in or moving money went: Make a Transfer (From, To,
+  Amount, Memo, review and confirmation, with cancel) is now Transfers, a
+  read-only list of the scheduled and recent transfers between the accounts
+  from the books, in the same place beneath the quick actions, and the
+  reader can no longer add to the books; the "Last log in" line under the
+  greeting; the paperless form on Delivery preferences, with its consent
+  box, now a read-only list of each account's delivery; the footer's
+  Download the app and Report fraud (About the demo moved to the legal row
+  beside About Us, and the Manage Your Account column went); Protect
+  yourself against fraud in the Demo accounts box; Log Out, now Exit; and
+  the customer's email address and telephone numbers, which no page showed.
+  The account page's Transfer and Make a payment buttons are one Transfers
+  link. The quick links Pay Bills, Send Money and Mobile Deposit stay as
+  plain text, as before, and Download CSV stays: it saves the activity the
+  table shows, made in the browser.
 - **Further steps against the flag (2026-10-17, Greg).** The study moved from
   `golden-grids-study-19-tdbank` to `golden-grids-study-19-gifbank`, so the
   bank's name is no longer in its web address; the old address no longer

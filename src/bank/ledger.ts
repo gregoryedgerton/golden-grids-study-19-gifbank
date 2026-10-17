@@ -61,8 +61,6 @@ export interface Txn {
   split?: { principal: number; interest: number; escrow: number };
   /** Effect on the mortgage's escrow balance. */
   escrow?: number;
-  /** A reader's own transfer, kept in the browser. */
-  own?: boolean;
   /** The other side of a transfer between the customer's own accounts. */
   mirror?: AccountId;
 }
@@ -126,24 +124,23 @@ const ELECTRIC = [16800, 15200, 12100, 9600, 8800, 12400, 17100, 17600, 13300, 9
 const DINING = ["GIFbell", "GIFn'now", "GIFkitchen", "GIFdiner", "GIFsaffron", "GIFhops"];
 const SHOPS = [["GIFparcel", 1400, 9600], ["GIFbooks", 1200, 3800], ["GIFea", 1800, 6400], ["GIFdepot", 900, 5200]] as const;
 
-export interface Transfer { id: string; from: AccountId; to: AccountId; amount: number; date: string; memo?: string }
-
 /**
- * Builds every transaction from January 2025 to today, in date order, with
- * the reader's own transfers (dated today) added. Card autopay pays each
- * statement's balance in full, so the books keep the card's month-end
- * balance as they go.
+ * Builds every transaction from January 2025 to today, in date order. Card
+ * autopay pays each statement's balance in full, so the books keep the
+ * card's month-end balance as they go. The reader cannot add to the books:
+ * the study shows transfers and makes none (CLAUDE.md, Safe Browsing
+ * remediation).
  */
-export function build(own: Transfer[] = []): Txn[] {
+export function build(): Txn[] {
   const r = mulberry32(19_2026);
   const between = (lo: number, hi: number) => Math.round(lo + r() * (hi - lo));
   const pick = <T,>(xs: readonly T[]) => xs[Math.floor(r() * xs.length)];
   const out: Txn[] = [];
   let n = 0;
   const add = (t: Omit<Txn, "id">) => { out.push({ ...t, id: `t${(++n).toString(36)}` }); };
-  const xfer = (date: string, from: AccountId, to: AccountId, amount: number, descFrom: string, descTo: string, detail?: string, category: Category = "Transfers", ownT = false) => {
-    add({ account: from, date, desc: descFrom, detail, kind: from === "card" ? "credit" : "transfer-out", amount: from === "card" || from === "mortgage" ? amount : -amount, category, mirror: to, own: ownT || undefined });
-    add({ account: to, date, desc: descTo, detail, kind: to === "card" ? "payment" : "transfer-in", amount: to === "card" || to === "mortgage" ? -amount : amount, category, mirror: from, own: ownT || undefined });
+  const xfer = (date: string, from: AccountId, to: AccountId, amount: number, descFrom: string, descTo: string, detail?: string, category: Category = "Transfers") => {
+    add({ account: from, date, desc: descFrom, detail, kind: from === "card" ? "credit" : "transfer-out", amount: from === "card" || from === "mortgage" ? amount : -amount, category, mirror: to });
+    add({ account: to, date, desc: descTo, detail, kind: to === "card" ? "payment" : "transfer-in", amount: to === "card" || to === "mortgage" ? -amount : amount, category, mirror: from });
   };
 
   let cardBal = OPENING.card;
@@ -250,15 +247,6 @@ export function build(own: Transfer[] = []): Txn[] {
     if (d === lastDay(month)) cardStatement = cardBal;
   }
 
-  // The reader's own transfers, posted today after everything else.
-  for (const t of own) {
-    const a = account(t.from)!, b = account(t.to)!;
-    const memo = t.memo ? ` · ${t.memo}` : "";
-    if (t.to === "card") xfer(TODAY, t.from, "card", t.amount, `Payment to ${b.nickname}`, "Payment — thank you", `Online transfer${memo}`, "Transfers", true);
-    else if (t.to === "mortgage") xfer(TODAY, t.from, "mortgage", t.amount, `Extra principal to ${b.nickname}`, "Additional principal received", `Online transfer${memo}`, "Transfers", true);
-    else xfer(TODAY, t.from, t.to, t.amount, `Transfer to ${b.nickname}`, `Transfer from ${a.nickname}`, `Online transfer${memo}`, "Transfers", true);
-  }
-  for (const t of out) if (t.own) t.id = `o-${t.id}`;
   return out;
 }
 
@@ -356,7 +344,7 @@ export function statement(all: Txn[], id: AccountId, month: string): Statement {
   }
   if (a.group === "loan") {
     const pays = ls.filter((t) => t.split);
-    st.principalPaid = pays.reduce((s, t) => s + t.split!.principal, 0) + ls.filter((t) => t.own).reduce((s, t) => s - t.amount, 0);
+    st.principalPaid = pays.reduce((s, t) => s + t.split!.principal, 0);
     st.interestPaid = pays.reduce((s, t) => s + t.split!.interest, 0);
     st.escrowPaid = pays.reduce((s, t) => s + t.split!.escrow, 0);
     st.escrowOpening = escrowOn(all, before);
@@ -406,16 +394,17 @@ export const monthLabel = (month: string) => { const [y, m] = month.split("-").m
 // --- What comes next ----------------------------------------------------------------------------
 /** The scheduled activity of the next three weeks, by the same rules the books follow. */
 export function upcoming(all: Txn[]) {
-  const out: { date: string; label: string; detail: string; amount: number; account: AccountId }[] = [];
+  /** `to` is set for a transfer between the customer's own accounts. */
+  const out: { date: string; label: string; detail: string; amount: number; account: AccountId; to?: AccountId }[] = [];
   const cardDue = statement(all, "card", STATEMENT_MONTHS[STATEMENT_MONTHS.length - 1]);
   for (let d = addDays(TODAY, 1); d <= addDays(TODAY, 21); d = addDays(d, 1)) {
     const [y, m] = d.split("-").map(Number);
     for (const pay of [day(y, m, 1), day(y, m, 15)]) if (prev(pay) === d) out.push({ date: d, label: "GIFdesign", detail: "Direct deposit · Payroll", amount: d >= "2026-03-01" ? 281215 : 271240, account: "checking" });
     const n1 = m === 12 ? day(y + 1, 1, 1) : day(y, m + 1, 1);
     if (prev(n1) === d && ym(n1) !== ym(d)) out.push({ date: d, label: "GIFdesign", detail: "Direct deposit · Payroll", amount: 281215, account: "checking" });
-    if (next(day(y, m, 1)) === d) out.push({ date: d, label: "GIFhome Mortgage", detail: "Automatic payment", amount: -MORTGAGE_PAYMENT, account: "checking" });
-    if (next(day(y, m, 2)) === d) out.push({ date: d, label: "Transfer to Rainy Day Fund", detail: "Recurring transfer", amount: -75000, account: "checking" });
-    if (next(day(y, m, 20)) === d && ym(d) === ym(TODAY) && cardDue.closing > 0) out.push({ date: d, label: "GIFcash Credit Card", detail: "Automatic payment of the statement balance", amount: -cardDue.closing, account: "checking" });
+    if (next(day(y, m, 1)) === d) out.push({ date: d, label: "GIFhome Mortgage", detail: "Automatic payment", amount: -MORTGAGE_PAYMENT, account: "checking", to: "mortgage" });
+    if (next(day(y, m, 2)) === d) out.push({ date: d, label: "Transfer to Rainy Day Fund", detail: "Recurring transfer", amount: -75000, account: "checking", to: "savings" });
+    if (next(day(y, m, 20)) === d && ym(d) === ym(TODAY) && cardDue.closing > 0) out.push({ date: d, label: "GIFcash Credit Card", detail: "Automatic payment of the statement balance", amount: -cardDue.closing, account: "checking", to: "card" });
   }
   return out;
 }

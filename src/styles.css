@@ -67,17 +67,11 @@ fieldset { border: 0; padding: 0; min-width: 0; }
 :where(input, select, textarea):focus-visible { outline: 2px solid var(--link); outline-offset: 0; }
 input[readonly] { background: var(--tint); }
 input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; accent-color: var(--green); flex: none; margin: 0; }
-.field__error { color: var(--red); font-size: 14px; font-weight: 600; }
-.field__static { display: flex; align-items: center; gap: 6px; min-height: 44px; }
 .field--inline { margin: 8px 0 0 52px; max-width: 220px; }
-.money-input { position: relative; }
-.money-input span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--fg-2); }
-.money-input input { padding-left: 26px; font-variant-numeric: tabular-nums; }
 .fields3 { display: grid; gap: 12px; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); }
 .radios { display: grid; gap: 10px; margin-bottom: 18px; }
 .radios legend { font-weight: 600; margin-bottom: 8px; }
-.radios label, .consent { display: flex; align-items: center; gap: 10px; min-height: 28px; cursor: pointer; }
-.consent { align-items: flex-start; padding: 12px; background: var(--tint); border-left: 4px solid var(--green); }
+.radios label { display: flex; align-items: center; gap: 10px; min-height: 28px; cursor: pointer; }
 
 /* --- Buttons: square, green ------------------------------------------------------------ */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 22px; border: 2px solid transparent; border-radius: 0; font: 600 16px/1.2 var(--font); text-decoration: none; cursor: pointer; white-space: nowrap; }
@@ -278,14 +272,10 @@ button.action { cursor: pointer; }
 .panel { margin-top: 16px; padding: 20px; border: 1px solid var(--line); border-top: 4px solid var(--green); background: var(--card); display: grid; gap: 14px; }
 .panel__title { display: flex; align-items: center; gap: 8px; font: 600 20px/1.2 var(--font); color: var(--head); }
 .panel__sub { font: 600 17px/1.3 var(--font); color: var(--head); margin-bottom: 6px; }
-.steps { display: flex; gap: 6px; counter-reset: step; }
-.steps li { flex: 1; padding: 6px 0 0; border-top: 4px solid var(--line); font-size: 14px; color: var(--fg-2); counter-increment: step; }
-.steps li::before { content: counter(step) ". "; }
-.steps li.is-on { border-color: var(--green); color: var(--fg); font-weight: 600; }
-.transfer__form { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.transfer__form .row { grid-column: 1 / -1; }
-.transfer__ok { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--in); }
-.list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 0; border-top: 1px solid var(--line); }
+/* Transfers between the accounts: a read-only list in two columns, scheduled and recent. */
+.transfers__cols { row-gap: 18px; }
+.transfers__col { min-width: 0; }
+.transfers__col .rows { border-top: 1px solid var(--line); }
 .list-card { margin-top: 30px; min-width: 0; }
 .twocol { display: grid; gap: 0 32px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
 .rows li { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
@@ -375,9 +365,7 @@ button.action { cursor: pointer; }
 .sum__total th, .sum__total td { font-weight: 700; border-top: 2px solid var(--fg); border-bottom: 0; }
 .daily { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px 18px; font-variant-numeric: tabular-nums; }
 .daily li { display: flex; justify-content: space-between; border-bottom: 1px dotted var(--line-2); padding: 3px 0; font-size: 14px; }
-.delivery__row { display: flex; flex-wrap: wrap; gap: 10px 24px; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.delivery__row legend { float: left; width: 100%; margin-bottom: 6px; }
-.delivery__row label { display: flex; align-items: center; gap: 8px; min-height: 28px; cursor: pointer; }
+.delivery .rows { border-top: 1px solid var(--line); }
 
 /* --- Settings -------------------------------------------------------------------------------- */
 .setlayout { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); margin-top: 18px; }

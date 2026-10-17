@@ -27,7 +27,6 @@ function OnlineBanking() {
       </div>
       <ul className="ob__links">
         <li><span className="linkish">What the demo shows <Icon name="right" size={14} /></span></li>
-        <li><span className="linkish">Protect yourself against fraud <Icon name="right" size={14} /></span></li>
         <li><span className="linkish">Book an Appointment <Icon name="right" size={14} /></span></li>
       </ul>
     </div>

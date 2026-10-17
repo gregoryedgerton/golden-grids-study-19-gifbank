@@ -4,7 +4,7 @@ import { BankPage } from "../lib/Page";
 import { GridBand, type Cell } from "../bands/bands";
 import { Figure, HideToggle, Money, plain } from "../lib/bank";
 import { Icon } from "../icons";
-import { CUSTOMER, PAGES, REFERENCE, accountHref, statementHref } from "../content";
+import { CUSTOMER, PAGES, REFERENCE, accountHref, deliveryLabel, statementHref } from "../content";
 import { MORTGAGE_PAYMENT, STATEMENT_MONTHS, TODAY, addDays, balances, dateLabel, escrowOn, lastDay, lines, mask, money, monthLabel, shortDate, statement, type Account, type Line, type Txn } from "../bank/ledger";
 import { settings, useAccounts, useBooks } from "../lib/store";
 import "../styles.css";
@@ -124,7 +124,7 @@ function Activity({ a, all }: { a: Account; all: Txn[] }) {
   const row = (t: Line) => {
     const isOpen = open === t.id;
     const amounts = loan
-      ? [t.split ? <Money cents={t.split.principal} /> : t.own ? <Money cents={-t.amount} /> : "", t.split ? <Money cents={t.split.interest} /> : "", t.split ? <Money cents={t.split.escrow} /> : t.escrow ? <Money cents={t.escrow} /> : ""]
+      ? [t.split ? <Money cents={t.split.principal} /> : "", t.split ? <Money cents={t.split.interest} /> : "", t.split ? <Money cents={t.split.escrow} /> : t.escrow ? <Money cents={t.escrow} /> : ""]
       : [moneyIn(t) ? "" : <Money cents={Math.abs(t.amount)} />, moneyIn(t) ? <Money cents={Math.abs(t.amount)} /> : ""];
     return (
       <Fragment key={t.id}>
@@ -175,7 +175,6 @@ function Activity({ a, all }: { a: Account; all: Txn[] }) {
 }
 
 function Details({ a }: { a: Account }) {
-  const s = settings.use();
   return (
     <details className="wrap acctdetails">
       <summary>Account details</summary>
@@ -185,7 +184,7 @@ function Details({ a }: { a: Account }) {
         <div><dt>Account number</dt><dd>{mask(a)}</dd></div>
         <div><dt>Opened</dt><dd>{dateLabel(a.opened)}</dd></div>
         <div><dt>Owner</dt><dd>{CUSTOMER.name}</dd></div>
-        <div><dt>Statements</dt><dd>{s.delivery[a.id] === "online" ? "Online only" : "Online and paper"} · <a href={`${PAGES.statements}?a=${a.id}&tab=delivery`}>Change</a></dd></div>
+        <div><dt>Statements</dt><dd>{deliveryLabel(a.id)}</dd></div>
         {a.group === "deposit" && a.id === "checking" && <div><dt>Monthly fee</dt><dd>{money(0)}, waived with a {money(50000)} daily balance</dd></div>}
         {a.limit && <div><dt>Credit line</dt><dd>{money(a.limit)} · Purchase APR {(a.rate! * 100).toFixed(2)}%</dd></div>}
         {a.loan && <div><dt>Loan</dt><dd>{money(a.loan.original)}, {a.loan.termMonths / 12} years, first payment {dateLabel(a.loan.firstPayment)}</dd></div>}
@@ -208,8 +207,7 @@ function App() {
         </div>
         <div className="accthead__acts">
           <div className="field"><label htmlFor="switch">Switch account</label><select id="switch" value={a.id} onChange={(e) => location.assign(accountHref(e.target.value))}>{accts.map((x) => <option key={x.id} value={x.id}>{x.nickname} {mask(x)}</option>)}</select></div>
-          {a.group === "deposit" && <a className="btn btn--green" href={`${PAGES.accounts}#transfer`}><Icon name="transfer" size={18} />Transfer</a>}
-          {a.group !== "deposit" && <a className="btn btn--green" href={`${PAGES.accounts}?to=${a.id}#transfer`}><Icon name="transfer" size={18} />Make a payment</a>}
+          <a className="btn btn--green" href={`${PAGES.accounts}#transfer`}><Icon name="transfer" size={18} />Transfers</a>
           <a className="btn btn--outline" href={statementHref(a.id)}><Icon name="doc" size={18} />Statements</a>
         </div>
       </div>

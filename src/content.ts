@@ -1,9 +1,13 @@
+import type { AccountId } from "./bank/ledger";
+
 /**
  * Everything on GIFbank's pages that is words rather than money: the
  * customer, the navigation, the public home page and the footer. The money
  * is in `bank/ledger.ts`. GIFbank, its products and its customer are
- * invented; the customer's details are the study's own and reach no one
- * (`.example` addresses, a 555-01 telephone number).
+ * invented; the customer's only detail is an address on an invented street,
+ * shown on statements and the drawn check. There is no email address or
+ * telephone number, and no field that asks for one (CLAUDE.md, Safe
+ * Browsing remediation).
  */
 export const BASE = import.meta.env.BASE_URL;
 export const PAGES = {
@@ -27,18 +31,22 @@ export const CUSTOMER = {
   name: "GIFcommit",
   first: "GIFcommit",
   since: "2019",
-  email: "gifcommit@example.com",
-  mobile: "(856) 555-0142",
-  home: "(856) 555-0187",
   address: { line1: "46 Larkmoor Lane", city: "Haddonfield", state: "NJ", zip: "08033" },
-  lastLogin: "Oct 15, 2026 at 8:42 PM",
 };
+
+/**
+ * How each account's statements are delivered. Shown, never changed: the
+ * form that changed it, with its consent box, was removed in the Safe
+ * Browsing remediation (CLAUDE.md).
+ */
+export const DELIVERY: Record<AccountId, "online" | "paper"> = { checking: "online", savings: "online", card: "paper", mortgage: "paper" };
+export const deliveryLabel = (id: AccountId) => (DELIVERY[id] === "online" ? "Online only" : "Online and paper");
 
 /** The public site's three bars: the line of segments, the utilities with Enter in the corner, and the products. */
 export const SEGMENTS = ["Personal", "Small Business", "Commercial", "Investing & Wealth", "About Us"];
 export const PRODUCT_NAV = ["Checking & Savings", "Credit Cards", "Lending", "Learning", "GIFpremier"];
 
-/** The signed-in tabs. Three are the study's pages; Transfers is a section of Accounts; the rest are for show. */
+/** The signed-in tabs. Three are the study's pages; Transfers opens the read-only list of transfers on Accounts; the rest are for show. */
 export const BANK_TABS: { label: string; href?: string; match?: string[] }[] = [
   { label: "Accounts", href: PAGES.accounts, match: ["accounts", "account"] },
   { label: "Transfers", href: `${PAGES.accounts}#transfer` },
@@ -75,8 +83,8 @@ export const HOME = {
   ],
   questions: [
     { q: "What's the difference between a pending and a posted transaction?", a: "A pending transaction has been authorized but not yet settled; it lowers your available balance at once. When it settles it posts, and your current balance changes." },
-    { q: "How do I stop paper statements?", a: "In the demo, open Statements & Documents, then Delivery preferences, and choose online only for each account. You'll get an email when each new statement is ready." },
-    { q: "How long are online statements kept?", a: "Up to seven years. Statements for an account appear from the month it was opened, or the month you enrolled in online statements." },
+    { q: "How are statements delivered?", a: "Each account's statements come online only, or online and by mail. In the demo, Statements & Documents lists each account's delivery under Delivery preferences." },
+    { q: "How long are online statements kept?", a: "Up to seven years. An account's statements begin with the month it was opened, or the month its online statements began." },
     { q: "Why is my available balance different from my current balance?", a: "Your current balance counts transactions that have posted. Your available balance also subtracts pending debits, such as a card purchase made today." },
   ],
 };
@@ -85,9 +93,9 @@ export const FOOTER: { title: string; links: string[] }[] = [
   { title: "Checking & Savings", links: ["Checking", "Savings", "Student", "CDs", "IRAs", "GIFpremier"] },
   { title: "Credit Cards", links: ["Cash back cards", "Balance transfer cards", "No annual fee", "Build credit", "View all credit cards"] },
   { title: "Lending", links: ["Personal loans", "Mortgage", "Home equity"] },
-  { title: "Manage Your Account", links: ["About the demo", "Download the app", "Report fraud"] },
 ];
-export const LEGAL = ["Privacy", "Online Advertising", "Terms of Use", "Security", "About Us", "Accessibility", "Careers", "Site Map"];
+/** About the demo, the last of the old Manage Your Account links, sits here beside About Us. */
+export const LEGAL = ["Privacy", "Online Advertising", "Terms of Use", "Security", "About Us", "About the demo", "Accessibility", "Careers", "Site Map"];
 
 /**
  * The pages this study follows, by name. They are not linked from the pages:

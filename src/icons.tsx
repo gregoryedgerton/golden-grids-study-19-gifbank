@@ -36,7 +36,7 @@ const PATHS = {
   plus: "M12 5v14M5 12h14",
   phone: "M8 3h8v18H8zM11 18h2",
   shield: "M12 3 4.5 6v5.5c0 4.5 3 8 7.5 9.5 4.5-1.5 7.5-5 7.5-9.5V6z",
-  logout: "M14 4h5v16h-5M10 8l-4 4 4 4M6 12h10",
+  exit: "M14 4h5v16h-5M10 8l-4 4 4 4M6 12h10",
   chat: "M4 5h16v11H9l-5 4z",
   arrowDown: "M12 5v14M6 13l6 6 6-6",
 } as const;

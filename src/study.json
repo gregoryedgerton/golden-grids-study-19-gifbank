@@ -9,10 +9,10 @@
     "account": "Account activity",
     "statements": "Statements & Documents"
   },
-  "summary": "TD Bank's personal banking home page and the signed-in Online Banking behind its log-in, rebuilt as stacked golden grids for a fictional bank and a fictional customer. Where the reference has Log In, the header's corner says Enter: a notice that GIFbank is a parody, then a demo: an accounts page, each account's activity, and twenty-one months of statements and year-end documents, all in a fictional currency, Dollaz (Ƶ). Every balance, statement and running total is computed from one set of invented transactions, so the arithmetic holds everywhere, and transfers the reader makes change every page.",
+  "summary": "TD Bank's personal banking home page and the Online Banking pages a customer sees inside it, rebuilt as stacked golden grids for a fictional bank and a fictional customer. In the header's corner, where the reference has its sign-in, the study has Enter: a notice that GIFbank is a parody, then a demo: an accounts page, each account's activity, and twenty-one months of statements and year-end documents, all in a fictional currency, Dollaz (Ƶ). Every balance, statement and running total is computed from one set of invented transactions, so the arithmetic holds everywhere. The demo shows money moving between the accounts but has no form that moves it.",
   "reviewed": {
     "date": "October 16, 2026",
-    "method": "The public home page and the reference's Online Banking sign-in page were read and captured at 390, 820 and 1440 pixels for structure, colour and type; the captures are not kept, as they carry the reference's photographs and marks. The signed-in pages were not seen: the study does not sign in to anyone's account. They are built from the reference's own descriptions of Online Banking and My TD (the accounts view, available balance and pending transactions, statements kept seven years and paperless delivery, alerts, masked account numbers, single-use security codes) and from how such pages are commonly arranged. No text or image of the reference is kept in the repository or published. The pages are named here but not linked: a bank lookalike that links to the real bank reads as phishing to Google's scanners, which flagged the first version of this study. The repository's README links them.",
+    "method": "The public home page and the reference's Online Banking sign-in page were read and captured at 390, 820 and 1440 pixels for structure, colour and type; the captures are not kept, as they carry the reference's photographs and marks. The signed-in pages were not seen: the study does not sign in to anyone's account. They are built from the reference's own descriptions of Online Banking and My TD (the accounts view, available balance and pending transactions, transfers between accounts, statements kept seven years and paperless delivery, masked account numbers) and from how such pages are commonly arranged. No text or image of the reference is kept in the repository or published. The pages are named here but not linked: a bank lookalike that links to the real bank reads as phishing to Google's scanners, which flagged the first version of this study. The repository's README links them.",
     "pages": [
       {
         "label": "Personal banking home page"
@@ -29,16 +29,16 @@
     ]
   },
   "real": [
-    "The structure of the public home page: the line of segments, the header with Log In in its corner (here Enter, which opens a parody notice: the study has no sign-in), the product navigation, the hero with an Online Banking box, the row of products, the reasons to bank and the questions, and the footer's groups of links.",
-    "The features the reference describes for Online Banking: all accounts on one page, an available balance that drops at once for a card purchase while the purchase shows as pending, statements online for seven years with paper statements that can be turned off, alerts for balances and deposits, masked account numbers and single-use security codes.",
+    "The structure of the public home page: the line of segments, the header with its sign-in in the corner (here Enter, which opens a parody notice: the study has no sign-in), the product navigation, the hero with an Online Banking box, the row of products, the reasons to bank and the questions, and the footer's groups of links.",
+    "The features the reference describes for Online Banking: all accounts on one page, an available balance that drops at once for a card purchase while the purchase shows as pending, statements online for seven years, delivered online only or online and by mail, and masked account numbers.",
     "The arithmetic. Every balance, running balance, statement total, interest payment, mortgage split and card statement is computed from the transactions, and a check in the repository confirms that each statement's beginning balance plus its activity equals its ending balance, that each ending balance is the next beginning, and that both sides of every transfer agree."
   ],
   "invented": [
     "The name. GIFbank is a parody name made for this study; GIFpremier plays on the reference's premium banking, and the products are GIFcomplete Checking, GIFsignature Savings, GIFcash Credit Card and GIFhome Mortgage. GIFbank, N.A. is not a bank, is not insured by the FDIC and lends nothing.",
     "The money. GIFbank's currency is Dollaz, written Ƶ, so that no figure reads as real money; the year-end documents are GIFbank's own, not any government's forms.",
-    "The customer, GIFcommit, the name on every account, with an address, telephone numbers in the 555-01 range set aside for fiction and an email at example.com, shown on statements, and every account: four products named for GIFbank, with account numbers shown only as Xs ending in four letters in sequence (ABCD, EFGH, IJKL, MNOP).",
+    "The customer, GIFcommit, the name on every account, with an address on an invented street, shown on statements and the drawn check, and every account: four products named for GIFbank, with account numbers shown only as Xs ending in four letters in sequence (ABCD, EFGH, IJKL, MNOP).",
     "Every transaction, from January 2025 to October 16, 2026: an employer, merchants, utilities and payees with GIF names (GIF and a lowercase tail, some of them the other layout studies' brands), generated by a seeded program so they are the same on every visit. Amounts are plausible and fictional; the mortgage follows the standard fixed-rate formula on an invented loan.",
-    "The way in. There is no sign-in: an Enter control shows a notice that GIFbank is a parody and not a real bank, then opens the sample accounts. Nothing typed anywhere on the pages leaves the browser. Transfers and delivery preferences are kept in this browser's local storage, and Reset the demo, in the name menu, clears them.",
+    "The way in. There is no sign-in: an Enter control shows a notice that GIFbank is a parody and not a real bank, then opens the sample accounts, and Exit leaves them. Nothing typed anywhere on the pages leaves the browser. The demo moves no money and asks for no personal details or consent: Transfers lists the scheduled and recent transfers between the accounts from the books, and Delivery preferences shows how each account's statements arrive. Whether the demo has been entered and whether balances are hidden are kept in this browser's local storage, and Reset the demo, in the name menu, clears them.",
     "The signed-in pages' exact arrangement, which is the study's own reading of how such pages work, since the reference's could not be seen."
   ],
   "assets": [
@@ -69,5 +69,5 @@
   ],
   "owner": "TD Bank, N.A. or The Toronto-Dominion Bank",
   "repo": "https://github.com/gregoryedgerton/golden-grids-study-19-gifbank",
-  "updated": "October 16, 2026"
+  "updated": "October 17, 2026"
 }

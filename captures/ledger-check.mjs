@@ -2,10 +2,10 @@
 // (opening + activity = closing, and each closing is the next opening), both
 // sides of every transfer, the card's autopay against its statement, and the
 // mortgage's split. Run: node --experimental-strip-types captures/ledger-check.mjs
+// (The reader can no longer add transfers, so there is no --own run.)
 import { ACCOUNTS, OPENING, ESCROW_OPENING, STATEMENT_MONTHS, MORTGAGE_PI, MORTGAGE_PAYMENT, TODAY, build, lines, balances, statement, escrowOn, taxYear, money, spending } from "../src/bank/ledger.ts";
 
-const own = process.argv.includes("--own") ? [{ id: "x1", from: "checking", to: "savings", amount: 12345, date: TODAY }, { id: "x2", from: "checking", to: "card", amount: 5000, date: TODAY }, { id: "x3", from: "savings", to: "mortgage", amount: 25000, date: TODAY }] : [];
-const all = build(own);
+const all = build();
 let fail = 0;
 const ok = (cond, msg) => { if (!cond) { fail++; console.log("FAIL", msg); } };
 
@@ -36,7 +36,7 @@ for (const t of all.filter((t) => t.mirror && t.amount !== 0)) {
 for (let i = 0; i < STATEMENT_MONTHS.length - 1; i++) {
   const s = statement(all, "card", STATEMENT_MONTHS[i]);
   const nextS = statement(all, "card", STATEMENT_MONTHS[i + 1]);
-  const autopay = nextS.lines.filter((t) => t.kind === "payment" && !t.own).reduce((x, t) => x + t.amount, 0);
+  const autopay = nextS.lines.filter((t) => t.kind === "payment").reduce((x, t) => x + t.amount, 0);
   ok(autopay === -s.closing, `card autopay in ${STATEMENT_MONTHS[i + 1]} pays ${STATEMENT_MONTHS[i]} balance`);
 }
 // Mortgage payments split exactly.
