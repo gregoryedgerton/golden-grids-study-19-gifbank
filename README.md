@@ -2,7 +2,7 @@ GIFcommit00020
 
 # Layout study — TD Bank, as GIFbank
 
-**Live:** [`https://gregoryedgerton.github.io/golden-grids-study-19-tdbank/`](https://gregoryedgerton.github.io/golden-grids-study-19-tdbank/)
+**Live:** [`https://gregoryedgerton.github.io/golden-grids-study-19-gifbank/`](https://gregoryedgerton.github.io/golden-grids-study-19-gifbank/)
 
 An unaffiliated layout study. It rebuilds [TD Bank's](https://www.td.com/us/en/personal-banking)
 personal banking home page and the signed-in Online Banking behind its log-in
@@ -90,7 +90,7 @@ statements and documents, the questions and the footer.
 | Account | Balances | five figures for the kind of account |
 | Statements | At a glance | five figures from the statement's summary |
 
-**What answers back.** Enter in the corner, and the Online Banking box, open
+**What answers back.** Enter in the corner, and the Demo accounts box (the reference's Online Banking box), open
 the parody notice beneath the corner; Continue goes to the demo accounts, and
 Log Out (in the header and the name menu) leaves them. A signed-in page reached
 while signed out shows the notice in its place. Hide balances turns every figure to dots. Make a
@@ -164,6 +164,14 @@ Observations for whoever reviews this study, recorded without a verdict.
 Whether the layout suits the page is assessed separately, after every study
 has been reviewed.
 
+- **Further steps against the flag (2026-10-17, Greg).** The study moved from
+  `golden-grids-study-19-tdbank` to `golden-grids-study-19-gifbank`, so the
+  bank's name is no longer in its web address; the old address no longer
+  serves anything. The pages name the reference but no longer link to it:
+  the closing disclosure says why ("Why nothing here links to the bank"),
+  and the addresses are kept in this README and nowhere in the build. The
+  home page's Online Banking box is called Demo accounts, its Sign-Up link is
+  gone, and the footer's Enroll in Online Banking reads About the demo.
 - **The sign-in was removed after Google flagged the study.** The first
   version rebuilt the corner log-in with a user name and password filled in
   and read-only, and cited the reference's real sign-in page. Google Safe

@@ -75,7 +75,7 @@ export const HOME = {
   ],
   questions: [
     { q: "What's the difference between a pending and a posted transaction?", a: "A pending transaction has been authorized but not yet settled; it lowers your available balance at once. When it settles it posts, and your current balance changes." },
-    { q: "How do I stop paper statements?", a: "In Online Banking, open Statements & Documents, then Delivery preferences, and choose online only for each account. You'll get an email when each new statement is ready." },
+    { q: "How do I stop paper statements?", a: "In the demo, open Statements & Documents, then Delivery preferences, and choose online only for each account. You'll get an email when each new statement is ready." },
     { q: "How long are online statements kept?", a: "Up to seven years. Statements for an account appear from the month it was opened, or the month you enrolled in online statements." },
     { q: "Why is my available balance different from my current balance?", a: "Your current balance counts transactions that have posted. Your available balance also subtracts pending debits, such as a card purchase made today." },
   ],
@@ -85,13 +85,18 @@ export const FOOTER: { title: string; links: string[] }[] = [
   { title: "Checking & Savings", links: ["Checking", "Savings", "Student", "CDs", "IRAs", "GIFpremier"] },
   { title: "Credit Cards", links: ["Cash back cards", "Balance transfer cards", "No annual fee", "Build credit", "View all credit cards"] },
   { title: "Lending", links: ["Personal loans", "Mortgage", "Home equity"] },
-  { title: "Manage Your Account", links: ["Enroll in Online Banking", "Download the app", "Report fraud"] },
+  { title: "Manage Your Account", links: ["About the demo", "Download the app", "Report fraud"] },
 ];
 export const LEGAL = ["Privacy", "Online Advertising", "Terms of Use", "Security", "About Us", "Accessibility", "Careers", "Site Map"];
 
+/**
+ * The pages this study follows, by name. They are not linked from the pages:
+ * a bank lookalike that links to the real bank is what phishing scanners look
+ * for (see CLAUDE.md, Safe Browsing remediation). The README links them.
+ */
 export const REFERENCE = {
-  home: { label: "TD Bank's personal banking home page", url: "https://www.td.com/us/en/personal-banking" },
-  onlineBanking: { label: "its description of Online Banking", url: "https://www.td.com/us/en/personal-banking/online-banking" },
-  myTd: { label: "My TD", url: "https://www.td.com/us/en/personal-banking/my-td" },
-  statements: { label: "its page on online statements", url: "https://www.tdbank.com/getmore/OnlineStatements.html" },
+  home: { label: "TD Bank's personal banking home page" },
+  onlineBanking: { label: "its description of Online Banking" },
+  myTd: { label: "My TD" },
+  statements: { label: "its page on online statements" },
 };

@@ -12,23 +12,19 @@
   "summary": "TD Bank's personal banking home page and the signed-in Online Banking behind its log-in, rebuilt as stacked golden grids for a fictional bank and a fictional customer. Where the reference has Log In, the header's corner says Enter: a notice that GIFbank is a parody, then a demo: an accounts page, each account's activity, and twenty-one months of statements and year-end documents, all in a fictional currency, Dollaz (Ƶ). Every balance, statement and running total is computed from one set of invented transactions, so the arithmetic holds everywhere, and transfers the reader makes change every page.",
   "reviewed": {
     "date": "October 16, 2026",
-    "method": "The public home page and the reference's Online Banking sign-in page were read and captured at 390, 820 and 1440 pixels for structure, colour and type; the captures are not kept, as they carry the reference's photographs and marks. The signed-in pages were not seen: the study does not sign in to anyone's account. They are built from the reference's own descriptions of Online Banking and My TD (the accounts view, available balance and pending transactions, statements kept seven years and paperless delivery, alerts, masked account numbers, single-use security codes) and from how such pages are commonly arranged. No text or image of the reference is kept in the repository or published.",
+    "method": "The public home page and the reference's Online Banking sign-in page were read and captured at 390, 820 and 1440 pixels for structure, colour and type; the captures are not kept, as they carry the reference's photographs and marks. The signed-in pages were not seen: the study does not sign in to anyone's account. They are built from the reference's own descriptions of Online Banking and My TD (the accounts view, available balance and pending transactions, statements kept seven years and paperless delivery, alerts, masked account numbers, single-use security codes) and from how such pages are commonly arranged. No text or image of the reference is kept in the repository or published. The pages are named here but not linked: a bank lookalike that links to the real bank reads as phishing to Google's scanners, which flagged the first version of this study. The repository's README links them.",
     "pages": [
       {
-        "label": "Personal banking home page",
-        "url": "https://www.td.com/us/en/personal-banking"
+        "label": "Personal banking home page"
       },
       {
-        "label": "Online Banking, described",
-        "url": "https://www.td.com/us/en/personal-banking/online-banking"
+        "label": "Online Banking, described"
       },
       {
-        "label": "My TD",
-        "url": "https://www.td.com/us/en/personal-banking/my-td"
+        "label": "My TD"
       },
       {
-        "label": "Online statements",
-        "url": "https://www.tdbank.com/getmore/OnlineStatements.html"
+        "label": "Online statements"
       }
     ]
   },
@@ -72,6 +68,6 @@
     }
   ],
   "owner": "TD Bank, N.A. or The Toronto-Dominion Bank",
-  "repo": "https://github.com/gregoryedgerton/golden-grids-study-19-tdbank",
+  "repo": "https://github.com/gregoryedgerton/golden-grids-study-19-gifbank",
   "updated": "October 16, 2026"
 }

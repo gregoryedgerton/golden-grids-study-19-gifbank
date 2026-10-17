@@ -138,7 +138,7 @@ function BankHeader({ current }: { current: string }) {
           <button type="button" className="btn btn--outline btn--small bank__out" onClick={out}><Icon name="logout" size={16} />Log Out</button>
         </div>
       </div>
-      <nav className="tabs" aria-label="Online Banking">
+      <nav className="tabs" aria-label="Demo banking">
         <div className="wrap"><ul>
           {BANK_TABS.map((t) => {
             const on = t.match?.includes(current);
@@ -166,16 +166,17 @@ function Footer({ bank }: { bank?: boolean }) {
   );
 }
 
-function Disclosure({ source }: { source: { label: string; url: string }[] }) {
+function Disclosure({ source }: { source: { label: string }[] }) {
   return (
     <StudyDisclosure>
-      <p>This page follows {source.map((s, i) => <span key={s.url + s.label}>{i > 0 && (i === source.length - 1 ? " and " : ", ")}<a href={s.url}>{s.label}</a></span>)}, as they were read in October 2026. The signed-in pages were not seen: the study does not sign in to anyone's account, and they are built from the reference's public descriptions of Online Banking and from how such pages are known to behave.</p>
+      <p>This page follows {source.map((s, i) => <span key={s.label}>{i > 0 && (i === source.length - 1 ? " and " : ", ")}{s.label}</span>)}, as they were read in October 2026. The signed-in pages were not seen: the study does not sign in to anyone's account, and they are built from the reference's public descriptions of Online Banking and from how such pages are known to behave.</p>
+      <p><strong>Why nothing here links to the bank.</strong> The pages this study follows are named but not linked. A page styled after a bank that links to that bank's own site can be flagged as phishing by automated scanners, as an earlier version of this study was, so the study does not link out to it. The addresses are listed in the study's repository.</p>
       <Credits />
     </StudyDisclosure>
   );
 }
 
-export function PublicPage({ source, children }: { source: { label: string; url: string }[]; children: ReactNode }) {
+export function PublicPage({ source, children }: { source: { label: string }[]; children: ReactNode }) {
   useFontsReady(["400 1em Figtree", "600 1em Figtree"]);
   return (
     <>
@@ -191,7 +192,7 @@ export function PublicPage({ source, children }: { source: { label: string; url:
 }
 
 /** A signed-in page. Signed out, it shows the sign-in where the page would be. */
-export function BankPage({ current, title, source, children }: { current: string; title: string; source: { label: string; url: string }[]; children: ReactNode }) {
+export function BankPage({ current, title, source, children }: { current: string; title: string; source: { label: string }[]; children: ReactNode }) {
   useFontsReady(["400 1em Figtree", "600 1em Figtree"]);
   const s = session.use();
   return (

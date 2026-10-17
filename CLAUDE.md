@@ -19,7 +19,7 @@ transfer flow; `src/lib/store.ts` everything the reader changes (local
 storage, `gg19b-*`); `src/content.ts` the customer, navigation and home copy.
 Read `docs/program/PROGRAM.md`, then `STUDY-BRIEF.md`, then `README.md`.
 
-Live at https://gregoryedgerton.github.io/golden-grids-study-19-tdbank/;
+Live at https://gregoryedgerton.github.io/golden-grids-study-19-gifbank/;
 pushing to `main` deploys.
 
 ## Rules that are not negotiable
@@ -338,7 +338,7 @@ collection, which is what the scanner reads.
 **What changed**
 - Removed the sign-in form (`LoginForm`) and its `DEMO_USER` / `DEMO_PASSWORD_SHOWN`
   constants. There are no username or password inputs anywhere in the study now.
-- The corner control and the Online Banking box now say **Enter**. Choosing it opens a
+- The corner control and the Demo accounts box (formerly Online Banking) now say **Enter**. Choosing it opens a
   **parody notice** (`ParodyNotice` in `src/lib/Page.tsx`) stating plainly that GIFbank is
   fictional and there is no sign-in, then continues to the demo accounts, the
   destination the old Log In button had (`accounts.html`). It was first a modal; it now
@@ -347,6 +347,17 @@ collection, which is what the scanner reads.
 - Dropped the home page's citation link to the real bank's sign-in portal (the `login`
   entry in `REFERENCE`, `src/content.ts`); the page now cites the editorial Online
   Banking description instead.
+
+**Further steps (2026-10-17, Greg chose 1 to 3 of the suggestions):**
+- The repo was renamed from `golden-grids-study-19-tdbank` to
+  `golden-grids-study-19-gifbank`, so the bank's name is not in the URL.
+- The pages do not link to the reference at all, an exception to the program's
+  rule that a study links its reference from the notice and disclosure. The
+  reference pages are names only (`REFERENCE` in `content.ts` has no URLs;
+  `study.json` pages have no `url`), the closing disclosure says why ("Why
+  nothing here links to the bank", at Greg's request), and the README keeps
+  the addresses. No TD address may appear in the build: check `dist`.
+- The home page's Online Banking box is "Demo accounts", with no Sign-Up.
 
 **Do not** reintroduce username/password inputs, a sign-in form, or any link to a real
 bank's sign-in in this study — or in the sibling `golden-grids-study-*` studies, which

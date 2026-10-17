@@ -11,23 +11,22 @@ import "../styles.css";
 
 /**
  * The public home page, after the reference's: a hero of a photograph, a
- * green panel with the offer and the Online Banking box beside it; the row
+ * green panel with the offer and the Demo accounts box beside it; the row
  * of products; how to manage an account; three photographs with reasons to
  * bank; and the questions people ask. Entry is in the header's corner, and
- * the Online Banking box opens the same parody notice before the demo.
+ * the Demo accounts box opens the same parody notice before the demo.
  */
 
 function OnlineBanking() {
   const s = session.use();
   return (
     <div className="box box--card ob">
-      <p className="ob__title">Online Banking</p>
+      <p className="ob__title">Demo accounts</p>
       <div className="ob__acts">
         {s.in ? <a className="btn btn--green" href={PAGES.accounts}>Go to your accounts</a> : <button type="button" className="btn btn--green" onClick={openEnter}><Icon name="lock" size={18} />Enter the demo</button>}
-        <span className="linkish">Sign-Up <Icon name="right" size={14} /></span>
       </div>
       <ul className="ob__links">
-        <li><span className="linkish">Learn more about Personal Online Banking <Icon name="right" size={14} /></span></li>
+        <li><span className="linkish">What the demo shows <Icon name="right" size={14} /></span></li>
         <li><span className="linkish">Protect yourself against fraud <Icon name="right" size={14} /></span></li>
         <li><span className="linkish">Book an Appointment <Icon name="right" size={14} /></span></li>
       </ul>
@@ -55,7 +54,7 @@ function Find() {
   const groups = deal(HOME.find, 4);
   return (
     <>
-      <div className="wrap intro"><h2 className="intro__title">Online Banking &amp; Financial Services to Meet Your Goals</h2><p className="intro__sub">What can we help you find?</p></div>
+      <div className="wrap intro"><h2 className="intro__title">Banking &amp; Financial Services to Meet Your Goals</h2><p className="intro__sub">What can we help you find?</p></div>
       {groups.map((g, gi) => (
         <GridBand key={gi} id={`find-${gi}`} title={gi === 0 ? "What can we help you find?" : "More to find"} quiet variant={gi + 1}
           cells={g.map((f): Cell => () => (
