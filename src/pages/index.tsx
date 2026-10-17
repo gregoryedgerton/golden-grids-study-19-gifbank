@@ -41,8 +41,8 @@ function Hero() {
     (x, k) => <PhotoCard k="hero" title="A living room" x={x} slotKey={k} />,
     () => (
       <div className="box box--green hero__panel">
-        <div className="box__fit box__fit--top"><Fit as="p" className="fit--title" min={18} max={52}>{HOME.hero.title}</Fit></div>
-        <div className="box__body"><Fit as="div" className="fit--body" min={13} max={20}><p>{HOME.hero.body}</p></Fit></div>
+        <div className="box__fit box__fit--top"><Fit as="p" className="fit--title" min={18} max={80}>{HOME.hero.title}</Fit></div>
+        <div className="box__body"><Fit as="div" className="fit--body" min={13} max={26}><p>{HOME.hero.body}</p></Fit></div>
         <div className="box__foot"><span className="btn btn--onGreen">{HOME.hero.cta}</span></div>
       </div>
     ),
@@ -62,7 +62,7 @@ function Find() {
           cells={g.map((f): Cell => () => (
             <button type="button" className={`box box--find${on === f.label ? " is-on" : ""}`} aria-pressed={on === f.label} onClick={() => setOn(on === f.label ? null : f.label)}>
               <span className="find__icon" aria-hidden="true"><Icon name={f.icon as IconName} size={40} stroke={1.5} /></span>
-              <span className="box__fit"><Fit as="span" className="fit--title" min={13} max={44}>{f.label}</Fit></span>
+              <span className="box__fit"><Fit as="span" className="fit--title" min={13} max={64}>{f.label}</Fit></span>
               <span className="box__foot"><span className="linkish">{on === f.label ? "Saved to compare" : "Compare"} <Icon name="right" size={14} /></span></span>
             </button>
           ))} />
@@ -77,8 +77,8 @@ function Manage() {
     (x, k) => <PhotoCard k="kitchen" title="A kitchen table" x={x} slotKey={k} />,
     ...HOME.manage.map((m): Cell => () => (
       <div className="box box--tile">
-        <div className="box__fit box__fit--top"><Fit as="p" className="fit--title" min={15} max={34}>{m.title}</Fit></div>
-        <div className="box__body"><Fit as="div" className="fit--body" min={13} max={19}><p>{m.body}</p></Fit></div>
+        <div className="box__fit box__fit--top"><Fit as="p" className="fit--title" min={15} max={56}>{m.title}</Fit></div>
+        <div className="box__body"><Fit as="div" className="fit--body" min={13} max={26}><p>{m.body}</p></Fit></div>
       </div>
     )),
   ];

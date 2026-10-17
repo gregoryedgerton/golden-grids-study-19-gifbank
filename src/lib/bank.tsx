@@ -32,7 +32,7 @@ export function AccountSquare({ a, all, rank }: { a: Account; all: Txn[]; rank: 
       <p className="acct__product">{a.product}</p>
       <p className="acct__name">{a.nickname}</p>
       <p className="acct__num">{mask(a)}</p>
-      <div className="box__fit"><Fit as="p" className="fit--display fit--num" min={14} max={rank === 0 ? 96 : 64}>{shown}</Fit></div>
+      <div className="box__fit"><Fit as="p" className="fit--display fit--num" min={14} max={rank === 0 ? 120 : 96}>{shown}</Fit></div>
       <p className="acct__label">{h.label}</p>
       <p className="acct__sub">{s.hideBalances ? "" : h.sub}</p>
       <span className="box__foot"><span className="linkish">View activity <Icon name="right" size={14} /></span></span>
@@ -41,7 +41,7 @@ export function AccountSquare({ a, all, rank }: { a: Account; all: Txn[]; rank: 
 }
 
 /** A figure as large type with its label, in the bank's own tile. */
-export function Figure({ label, value, sub, tone = "tile", max = 96 }: { label: string; value: string; sub?: string; tone?: "tile" | "green" | "dark"; max?: number }) {
+export function Figure({ label, value, sub, tone = "tile", max = 120 }: { label: string; value: string; sub?: string; tone?: "tile" | "green" | "dark"; max?: number }) {
   return (
     <div className={`box box--${tone} box--figure`}>
       <p className="box__label">{label}</p>

@@ -217,7 +217,7 @@ function Home() {
   const cells: Cell[] = SECTIONS.map((sec, i): Cell => () => (
     <a className={`box box--setting${i === 0 ? " box--lead" : ""}`} href={`${PAGES.settings}?s=${sec.id}`}>
       <span className="setting__icon" aria-hidden="true"><Icon name={sec.icon} size={i === 0 ? 40 : 30} stroke={1.5} /></span>
-      <span className="box__fit"><Fit as="span" className="fit--title" min={14} max={i === 0 ? 44 : 30}>{sec.title}</Fit></span>
+      <span className="box__fit"><Fit as="span" className="fit--title" min={14} max={i === 0 ? 72 : 52}>{sec.title}</Fit></span>
       <span className="setting__blurb">{sec.blurb(s)}</span>
       <span className="box__foot"><span className="linkish">Manage <Icon name="right" size={14} /></span></span>
     </a>

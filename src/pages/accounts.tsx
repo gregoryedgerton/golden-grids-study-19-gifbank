@@ -38,7 +38,7 @@ function Spending() {
   const rest = rows.slice(5);
   const restSum = rest.reduce((n, [, v]) => n + v, 0);
   const cells: Cell[] = shown.map(([cat, v], i): Cell => () => (
-    <Figure label={cat} value={plain(v, s.hideBalances)} sub={`${Math.round((v / total) * 100)}% of spending`} tone={i === 0 ? "green" : "tile"} max={i === 0 ? 88 : 60} />
+    <Figure label={cat} value={plain(v, s.hideBalances)} sub={`${Math.round((v / total) * 100)}% of spending`} tone={i === 0 ? "green" : "tile"} max={i === 0 ? 120 : 88} />
   ));
   return <GridBand id="spending" title="Spending this month" sub={`From checking and your credit card, ${shortDate(from)} to ${shortDate(TODAY)}: ${s.hideBalances ? "hidden" : plain(total, false)} in all${rest.length ? `, including ${s.hideBalances ? "hidden amounts" : plain(restSum, false)} in ${rest.map(([c]) => c.toLowerCase()).join(", ")}` : ""}. Transfers between your accounts and card payments are left out.`} variant={2} cells={cells} />;
 }

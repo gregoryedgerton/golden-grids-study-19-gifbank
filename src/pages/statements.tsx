@@ -29,7 +29,7 @@ function Summary({ s, a }: { s: Statement; a: Account }) {
     : a.group === "credit"
       ? [["New balance", s.closing, `Due ${dateLabel(s.dueDate!)}`], ["Previous balance", s.opening, undefined], ["Purchases", s.purchases, `${s.lines.filter((t) => t.kind === "purchase").length} purchases`], ["Payments and credits", -(s.payments + s.otherCredits), undefined], ["Minimum payment due", s.minimumDue!, `Cash back earned ${money(s.cashBack!)}`]]
       : [["Principal balance", s.closing, `On ${dateLabel(s.end)}`], ["Principal paid", s.principalPaid!, undefined], ["Interest paid", s.interestPaid!, undefined], ["Escrow paid in", s.escrowPaid!, undefined], ["Escrow balance", s.escrowClosing!, s.disbursed ? `After ${money(s.disbursed)} paid out` : undefined]];
-  const cells: Cell[] = figs.map(([label, v, sub], i): Cell => () => <Figure label={label as string} value={plain(v as number, h)} sub={sub as string | undefined} tone={i === 0 ? "green" : "tile"} max={i === 0 ? 96 : 56} />);
+  const cells: Cell[] = figs.map(([label, v, sub], i): Cell => () => <Figure label={label as string} value={plain(v as number, h)} sub={sub as string | undefined} tone={i === 0 ? "green" : "tile"} max={i === 0 ? 120 : 88} />);
   return <GridBand id="summary" title={`${monthLabel(s.month)} at a glance`} sub={`${a.nickname} ${mask(a)}`} lead variant={s.month.length + Number(s.month.slice(5))} cells={cells} />;
 }
 

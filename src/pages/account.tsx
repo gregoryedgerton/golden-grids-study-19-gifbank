@@ -58,7 +58,7 @@ function Figures({ a, all }: { a: Account; all: Txn[] }) {
     { label: "Escrow balance", value: plain(escrowOn(all, TODAY), h), sub: "For property tax and insurance" },
     { label: "Interest paid in 2026", value: plain(ytd((t) => t.split?.interest ?? 0), h) },
   ];
-  const cells: Cell[] = figs.map((f, i): Cell => () => <Figure label={f.label} value={f.value} sub={f.sub} tone={i === 0 ? "green" : "tile"} max={i === 0 ? 96 : 56} />);
+  const cells: Cell[] = figs.map((f, i): Cell => () => <Figure label={f.label} value={f.value} sub={f.sub} tone={i === 0 ? "green" : "tile"} max={i === 0 ? 120 : 88} />);
   return <GridBand id="balances" title="Balances" sub={`As of ${dateLabel(TODAY)}`} lead variant={a.id.length} cells={cells} before={<div className="band__tools"><HideToggle /></div>} />;
 }
 
