@@ -141,7 +141,7 @@ clears everything the study keeps.
   are the other layout studies' brands: GIFflix and GIFify are the
   subscriptions, GIFbnb the summer cottage, GIFdepot the hardware, GIFea the
   gifts, GIFbell and GIFn'now dinners out, GIFmutual the home insurance and
-  GIF.gov the tax refund. The bank's own products follow the same form
+  GIF;gov the tax refund. The bank's own products follow the same form
   (GIFcomplete Checking, GIFcash Credit Card, GIFpremier). GIFbank, N.A. is fictional; the footer says it is not
   a bank and not FDIC-insured.
 - **There is no sign-in.** No page has a user name or password field. Enter

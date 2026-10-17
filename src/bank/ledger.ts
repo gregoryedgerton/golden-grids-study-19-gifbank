@@ -217,8 +217,8 @@ export function build(): Txn[] {
 
     // Once-only events.
     const once: Record<string, () => void> = {
-      "2025-03-14": () => add({ account: "checking", date: d, desc: "GIF.gov", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 118200, category: "Income" }),
-      "2026-03-20": () => add({ account: "checking", date: d, desc: "GIF.gov", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 96400, category: "Income" }),
+      "2025-03-14": () => add({ account: "checking", date: d, desc: "GIF;gov", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 118200, category: "Income" }),
+      "2026-03-20": () => add({ account: "checking", date: d, desc: "GIF;gov", detail: "Direct deposit · Tax refund", kind: "deposit", amount: 96400, category: "Income" }),
       "2025-03-08": () => add({ account: "checking", date: d, desc: "GIFsend from Priya S.", detail: "Dinner, split", kind: "deposit", amount: 4500, category: "Gifts" }),
       "2025-06-14": () => add({ account: "checking", date: d, desc: "GIFsend to Sam K.", detail: "Concert tickets", kind: "withdrawal", amount: -6000, category: "Gifts" }),
       "2025-09-27": () => add({ account: "checking", date: d, desc: "GIFsend from Priya S.", detail: "Groceries", kind: "deposit", amount: 3200, category: "Gifts" }),

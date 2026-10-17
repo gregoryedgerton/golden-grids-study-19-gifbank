@@ -207,7 +207,7 @@ README: the smallest line, and that no screen-reader user has tested it.
   but always following the no space after GIFlowercase format"); the bank's
   products too (GIFcomplete Checking). Other studies' brands may appear as
   merchants (GIFflix, GIFify, GIFbnb, GIFdepot, GIFea, GIFbell, GIFn'now,
-  GIFmutual, GIF.gov). Never a real company's name.
+  GIFmutual, GIF;gov). Never a real company's name.
 - Panels open in the flow beneath what opened them (transfers,
   statements, account details). Only the corner's parody notice and the name menu hang
   from the header.
@@ -260,7 +260,7 @@ Two geometry rules, verified against source, that every band relies on:
 ## Brand
 
 - **The study's brand is a parody name**: `GIF` in capitals, then the tail of
-  the reference's name in lower case (GIFbnb, GIFspn, GIFflix, GIF.gov, GIFx,
+  the reference's name in lower case (GIFbnb, GIFspn, GIFflix, GIF;gov, GIFx,
   GIFbase, GIFmutual, GIFn'now, GIFbell, GIFipedia, GIFify, GIFmilk Records,
   GIFdepot, GIFvidia, GIFpark, GIF.org, GIFea, GIFbank, GIFin).
   Do not use GIFcommit as
