@@ -16,16 +16,39 @@ import type { Plugin } from "vite";
  *                there because share sheets and iOS do not read an SVG icon
  *                and otherwise borrow whatever icon the host last served.
  *
+ *   analytics    Golden Grids' one Google tag (GIFcommit account, Golden
+ *                Grids property, one web stream shared by the library, the
+ *                site, the deck and every study), first in the head as Google
+ *                asks, in the build only so development sends nothing. Each
+ *                study names itself with `site_name`, the repository's name
+ *                after "golden-grids-", which reports break down by.
+ *
  * Whatever title, description or icon an entry's HTML already carries is
  * replaced, so the entries cannot drift from each other or from the banner.
  */
 interface StudyMeta { number: string; name: string; brand?: string; notice: string; pages?: Record<string, string>; repo?: string }
+const GOOGLE_TAG = "G-G0REMGKSWQ";
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 export function studyTitle(study: StudyMeta, file: string): string {
   const site = `${study.brand ?? study.name} - a Golden Grids layout study`;
   const page = study.pages?.[file];
   return page && Object.keys(study.pages ?? {}).length > 1 ? `${page} · ${site}` : site;
+}
+
+/** The Google tag, as Google gives it, with the study's name on every event. */
+function googleTag(study: StudyMeta): string {
+  const site = study.repo?.match(/github\.com\/[^/]+\/(?:golden-grids-)?([^/]+)/)?.[1] ?? study.number;
+  return [
+    `<!-- Google tag (gtag.js) -->`,
+    `<script async src="https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG}"></script>`,
+    `<script>`,
+    `  window.dataLayer = window.dataLayer || [];`,
+    `  function gtag(){dataLayer.push(arguments);}`,
+    `  gtag('js', new Date());`,
+    `  gtag('config', '${GOOGLE_TAG}', { site_name: '${site}' });`,
+    `</script>`,
+  ].join("\n    ");
 }
 
 /** Where the study is published, from its repository: https://github.com/owner/repo → https://owner.github.io/repo/. */
@@ -69,7 +92,8 @@ export function studyMeta(): Plugin {
           `<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />`,
           `<link rel="apple-touch-icon" href="/apple-touch-icon.png" />`,
         ].join("\n    ");
-        return cleaned.replace(/<\/head>/i, `    ${head}\n  </head>`);
+        const tagged = ctx.server ? cleaned : cleaned.replace(/<head>/i, `<head>\n    ${googleTag(study)}`);
+        return tagged.replace(/<\/head>/i, `    ${head}\n  </head>`);
       },
     },
   };
